@@ -17,11 +17,12 @@ public class ExtractMixedFeaturesController extends ExtractFeaturesController {
 	public ExtractMixedFeaturesController(ExtractUnivariateFeaturesController extractUnivariateFeaturesController, ExtractMultivariateFeaturesController extractMultivariateFeaturesController){
 		this.setExtractUnivariateFeaturesController(extractUnivariateFeaturesController);
 		this.setExtractMultivariateFeaturesController(extractMultivariateFeaturesController);
+		featuresType = MIXED_FEATURES;
 	}
 	@Override
 	public void extractFeatures() {
 		extractUnivariateFeaturesController.extractFeatures();
-
+		selectedFeatures = extractUnivariateFeaturesController.getSelectedFeatures();
 	}
 	public ExtractUnivariateFeaturesController getExtractUnivariateFeaturesController() {
 		return extractUnivariateFeaturesController;
@@ -37,5 +38,4 @@ public class ExtractMixedFeaturesController extends ExtractFeaturesController {
 			ExtractMultivariateFeaturesController extractMultivariateFeaturesController) {
 		this.extractMultivariateFeaturesController = extractMultivariateFeaturesController;
 	}
-
 }

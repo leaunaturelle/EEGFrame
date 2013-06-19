@@ -51,6 +51,10 @@ public class ExtractUnivariateFeaturesController extends ExtractFeaturesControll
 		return extractUnivariateFeaturesWindow;
 	}
 	
+	public ExtractUnivariateFeaturesController(){
+		featuresType = UNIVARIATE_FEATURES;
+	}
+	
 	public void setUnivariateFeaturesSignalsList(SelectedSignal[] signals){
 		this.extractUnivariateFeaturesWindow.setSignalsLabelList(signals);
 		this.extractUnivariateFeaturesWindow.setVisible(true);
@@ -82,7 +86,6 @@ public class ExtractUnivariateFeaturesController extends ExtractFeaturesControll
 			SelectedSignal signal;
 			Long[] samples = new Long[2];
 			if(features.getSampleInterval() != null){
-				System.out.println("Tu ne smijem doc");
 				samples = features.getSampleInterval().get(0);				
 				for(int i = 0; i < features.getSignals().length; i++){
 //					index = features.getIndex();

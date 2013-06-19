@@ -25,6 +25,7 @@ public abstract class ExtractFeaturesController {
 	protected JFileChooser saveChooser;
 	protected JDialog waitDialog;
 	protected String outputFileType;
+	protected String featuresType;
 	
 	public String getOutputFileType() {
 		return outputFileType;
@@ -73,9 +74,9 @@ public abstract class ExtractFeaturesController {
 	}
 
 	
-	public void beginFeatureExtraction(SelectedSignal[] signals, boolean append){
-		selectedFeatures.get(0).setSignals(signals);		
-		createSaveChooser(selectedFeatures.get(0).getFeaturesType(), new CsvFileFilter(){}, ".csv", append);
+	public void beginFeatureExtraction(boolean append){
+//		selectedFeatures.get(0).setSignals(signals);		
+		createSaveChooser(featuresType, new CsvFileFilter(){}, ".csv", append);
 	}
 	
 	public void createExtractionWorker(String fileName, boolean append){
@@ -107,4 +108,7 @@ public abstract class ExtractFeaturesController {
 	}
 	public String CSV = "CSV";
 	public String WEKA_CSV = "WEKA_CSV";
+	public static String UNIVARIATE_FEATURES = "UnivariateFeatures";
+	public static String MULTIVARIATE_FEATURES = "MultivariateFeatures";
+	public static String MIXED_FEATURES = "MixedFeatures";
 }

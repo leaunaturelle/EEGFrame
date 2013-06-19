@@ -27,6 +27,10 @@ public class ExtractMultivariateFeaturesController extends
 	
 	private ExtractMultivariateFeaturesWindow extractMultivariateFeaturesWindow;
 
+	public ExtractMultivariateFeaturesController(){
+		featuresType = MULTIVARIATE_FEATURES;
+	}
+	
 	public synchronized ExtractMultivariateFeaturesWindow getExtractMultivariateFeaturesWindow() {
 		if(extractMultivariateFeaturesWindow == null){
 			extractMultivariateFeaturesWindow = new ExtractMultivariateFeaturesWindow(this);

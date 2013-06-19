@@ -15,7 +15,7 @@ public class UnivariateFeatures extends Features {
 
 	
 	public UnivariateFeatures(){
-		featuresType = "UnivariateFeatures";
+//		featuresType = "UnivariateFeatures";
 		features.put(MEAN, false);
 		features.put(STANDARD_DEVIATION, false);
 		features.put(MEAN_OF_ABS_VALUES_OF_FIRST_DIFFERENCES_RAW, false);

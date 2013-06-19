@@ -69,5 +69,4 @@ public class ExtractFeaturesWorker extends SwingWorker<Boolean, Void> {
 	            e.printStackTrace();
 	        }
 	}
-
 }

@@ -13,7 +13,7 @@ import gui.SelectedSignal;
  *
  */
 public abstract class Features {
-	protected String featuresType;
+//	protected String featuresType;
 	protected SelectedSignal[] signals;
 	protected ArrayList<Long[]> sampleInterval;
 	protected ArrayList<Double[]> timeInterval;
@@ -48,13 +48,13 @@ public abstract class Features {
 	}
 	public abstract String getLabel();
 
-	public String getFeaturesType() {
-		return featuresType;
-	}
-
-	public void setFeaturesType(String featuresType) {
-		this.featuresType = featuresType;
-	}
+//	public String getFeaturesType() {
+//		return featuresType;
+//	}
+//
+//	public void setFeaturesType(String featuresType) {
+//		this.featuresType = featuresType;
+//	}
 
 	public HashMap<String, Boolean> getFeatures() {
 		return features;

@@ -220,10 +220,10 @@ public class ExtractMultivariateFeaturesWindow extends JDialog {
 					}
 					multivariateController.getSelectedFeatures().get(0).setSignals(signals);
 					if(createButton.isSelected()){
-						multivariateController.beginFeatureExtraction(signals, false);
+//						multivariateController.beginFeatureExtraction(signals, false);
 					}
 					else {
-						multivariateController.beginFeatureExtraction(signals, true);
+//						multivariateController.beginFeatureExtraction(signals, true);
 					}
 					setVisible(false);
 					

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class MultivariateFeatures extends Features {
 
 	public MultivariateFeatures(){
-		featuresType = "MultivariateFeatures";
+//		featuresType = "MultivariateFeatures";
 		features.put(MUTUAL_DIM, false);
 		features.put(SYNCHRO_LIKELIHOOD, false);
 		features.put(CROSS_RECURRENCE, false);
