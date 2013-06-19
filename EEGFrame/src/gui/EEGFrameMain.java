@@ -35,7 +35,7 @@ import javax.swing.SwingUtilities;
 
 /**
  * @author lsuc
- *
+ *op
  */
 public class EEGFrameMain {
 	/**
