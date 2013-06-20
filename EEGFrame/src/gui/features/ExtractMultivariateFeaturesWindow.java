@@ -218,7 +218,7 @@ public class ExtractMultivariateFeaturesWindow extends JDialog {
 					for(int i = 0; i < signalsLabelList.getSelectedValues().length; i++){
 						signals[i] = (SelectedSignal)signalsLabelList.getSelectedValues()[i];
 					}
-					multivariateController.getSelectedFeatures().get(0).setSignals(signals);
+					multivariateController.getSelectedFeatures().get(0).getSignals().add(signals);
 					if(createButton.isSelected()){
 //						multivariateController.beginFeatureExtraction(signals, false);
 					}
@@ -247,7 +247,7 @@ public class ExtractMultivariateFeaturesWindow extends JDialog {
 			signalsLabelModel.addElement(signals[i]);
 		}
 	}
-	private synchronized void showNonlinearMultivariateFeaturesDialog(){
+	public synchronized void showNonlinearMultivariateFeaturesDialog(){
 		if(nonlinearMultivariateFeaturesDialog == null){
 			nonlinearMultivariateFeaturesDialog = new NonlinearMultivariateFeaturesDialog(multivariateController);
 		}

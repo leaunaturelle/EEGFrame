@@ -50,15 +50,17 @@ public class MultivariateFeatures extends Features {
 	 */
 	@Override
 	public String getLabel() {
-		StringBuilder labelBuilder = new StringBuilder();
-		for(int i = 0; i < signals.length; i++){
-			labelBuilder.append(getLabel(i));
-		}
-		return labelBuilder.toString();
+//		StringBuilder labelBuilder = new StringBuilder();
+//		for(int i = 0; i < signals.length; i++){
+//			labelBuilder.append(getLabel(i));
+//		}
+//		return labelBuilder.toString();
+		return "HOHOHO";
 	}
 	
 	public String getLabel(int index) {
-		return signals[index].getSignalLabel();
+//		return signals[index].getSignalLabel();
+		return "Santa_baby";
 	}
 
 	public static final String MUTUAL_DIM = "Mutual_dim";

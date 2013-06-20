@@ -8,10 +8,13 @@ import gui.EEGFrameMain;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -34,42 +37,7 @@ public class WekaCsvDialog extends JDialog {
 
 	private ExtractUnivariateFeaturesController univariateFeaturesController;
 	private JCheckBox wekaCheckBox, movingWindowCheckBox, removeUnknownCheckBox, multivariateCheckBox;
-	public JCheckBox getMultivariateCheckBox() {
-		return multivariateCheckBox;
-	}
-	public void setMultivariateCheckBox(JCheckBox multivariateCheckBox) {
-		this.multivariateCheckBox = multivariateCheckBox;
-	}
-	public JCheckBox getRemoveUnknownCheckBox() {
-		return removeUnknownCheckBox;
-	}
-	public void setRemoveUnknownCheckBox(JCheckBox removeUnknownCheckBox) {
-		this.removeUnknownCheckBox = removeUnknownCheckBox;
-	}
-	public JCheckBox getWekaCheckBox() {
-		return wekaCheckBox;
-	}
-	public void setWekaCheckBox(JCheckBox wekaCheckBox) {
-		this.wekaCheckBox = wekaCheckBox;
-	}
-	public JCheckBox getMovingWindowCheckBox() {
-		return movingWindowCheckBox;
-	}
-	public void setMovingWindowCheckBox(JCheckBox movingWindowCheckBox) {
-		this.movingWindowCheckBox = movingWindowCheckBox;
-	}
-	public JTextField getMovingWindowSizeTextField() {
-		return movingWindowSizeTextField;
-	}
-	public void setMovingWindowSizeTextField(JTextField movingWindowSizeTextField) {
-		this.movingWindowSizeTextField = movingWindowSizeTextField;
-	}
-	public JSpinner getPercentageSpinner() {
-		return percentageSpinner;
-	}
-	public void setPercentageSpinner(JSpinner percentageSpinner) {
-		this.percentageSpinner = percentageSpinner;
-	}
+	private JButton selectMultivariateButton;
 	private JTextField movingWindowSizeTextField;
 	private JSpinner percentageSpinner;
 	
@@ -194,14 +162,82 @@ public class WekaCsvDialog extends JDialog {
 		multivariatePanel.add(Box.createRigidArea(new Dimension(5,0)));
 		multivariateCheckBox = new JCheckBox("Add multivariate features");
 		multivariateCheckBox.setEnabled(false);	
+		multivariateCheckBox.addItemListener(new ItemListener() {
+			
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				if(e.getStateChange() == ItemEvent.SELECTED){
+					selectMultivariateButton.setEnabled(true);
+				}
+				else{
+					selectMultivariateButton.setEnabled(false);
+				}
+			}
+		});
 		multivariatePanel.add(multivariateCheckBox);
 		multivariatePanel.add(Box.createHorizontalGlue());
 		panel.add(multivariatePanel);
 		panel.add(Box.createRigidArea(new Dimension(5,5)));
+		
+		JPanel selectMultivariatePanel = new JPanel();
+		selectMultivariatePanel.setLayout(new BoxLayout(selectMultivariatePanel, BoxLayout.X_AXIS));
+//		selectMultivariatePanel.add(Box.createRigidArea(new Dimension(5,0)));
+		selectMultivariatePanel.add(Box.createHorizontalGlue());
+		selectMultivariateButton = new JButton("Select...");
+		selectMultivariateButton.setEnabled(false);	
+		selectMultivariateButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				univariateFeaturesController.getExtractMixedFeaturesController().getExtractMultivariateFeaturesController().getExtractMultivariateFeaturesWindow().showNonlinearMultivariateFeaturesDialog();
+				
+			}
+		});
+		selectMultivariatePanel.add(selectMultivariateButton);
+		selectMultivariatePanel.add(Box.createHorizontalGlue());
+		panel.add(selectMultivariatePanel);
+		panel.add(Box.createRigidArea(new Dimension(5,5)));
+
 
 		panel.add(new JSeparator());
 		panel.add(Box.createRigidArea(new Dimension(5,10)));
 		return panel;
 	}
 	
+	public JCheckBox getMultivariateCheckBox() {
+		return multivariateCheckBox;
+	}
+	public void setMultivariateCheckBox(JCheckBox multivariateCheckBox) {
+		this.multivariateCheckBox = multivariateCheckBox;
+	}
+	public JCheckBox getRemoveUnknownCheckBox() {
+		return removeUnknownCheckBox;
+	}
+	public void setRemoveUnknownCheckBox(JCheckBox removeUnknownCheckBox) {
+		this.removeUnknownCheckBox = removeUnknownCheckBox;
+	}
+	public JCheckBox getWekaCheckBox() {
+		return wekaCheckBox;
+	}
+	public void setWekaCheckBox(JCheckBox wekaCheckBox) {
+		this.wekaCheckBox = wekaCheckBox;
+	}
+	public JCheckBox getMovingWindowCheckBox() {
+		return movingWindowCheckBox;
+	}
+	public void setMovingWindowCheckBox(JCheckBox movingWindowCheckBox) {
+		this.movingWindowCheckBox = movingWindowCheckBox;
+	}
+	public JTextField getMovingWindowSizeTextField() {
+		return movingWindowSizeTextField;
+	}
+	public void setMovingWindowSizeTextField(JTextField movingWindowSizeTextField) {
+		this.movingWindowSizeTextField = movingWindowSizeTextField;
+	}
+	public JSpinner getPercentageSpinner() {
+		return percentageSpinner;
+	}
+	public void setPercentageSpinner(JSpinner percentageSpinner) {
+		this.percentageSpinner = percentageSpinner;
+	}
 }

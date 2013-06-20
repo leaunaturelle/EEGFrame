@@ -3,6 +3,8 @@
  */
 package features.output;
 
+import gui.SelectedSignal;
+
 import java.util.ArrayList;
 
 /**
@@ -16,6 +18,7 @@ public class UnivariateFeatures extends Features {
 	
 	public UnivariateFeatures(){
 //		featuresType = "UnivariateFeatures";
+		signals = new ArrayList<SelectedSignal[]>();
 		features.put(MEAN, false);
 		features.put(STANDARD_DEVIATION, false);
 		features.put(MEAN_OF_ABS_VALUES_OF_FIRST_DIFFERENCES_RAW, false);

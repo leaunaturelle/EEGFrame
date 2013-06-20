@@ -7,6 +7,7 @@ package gui.features;
 import features.output.ExtractMixedFeaturesController;
 import features.output.ExtractUnivariateFeaturesController;
 import features.output.Features;
+import features.output.MultivariateFeatures;
 import features.output.UnivariateFeatures;
 import gui.EEGFrameMain;
 import gui.SelectedSignal;
@@ -392,14 +393,34 @@ public class ExtractUnivariateFeaturesWindow extends JDialog {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+//				if(signalsLabelList.getSelectedValues() != null && signalsLabelList.getSelectedValues().length > 1){
+//					
+//					analysisMultivariateParametersDialog.saveInterval(multivariateController);
+//					SelectedSignal[] signals = new SelectedSignal[signalsLabelList.getSelectedValues().length];
+//					for(int i = 0; i < signalsLabelList.getSelectedValues().length; i++){
+//						signals[i] = (SelectedSignal)signalsLabelList.getSelectedValues()[i];
+//					}
+//					multivariateController.getSelectedFeatures().get(0).setSignals(signals);
+//					if(createButton.isSelected()){
+////						multivariateController.beginFeatureExtraction(signals, false);
+//					}
+//					else {
+////						multivariateController.beginFeatureExtraction(signals, true);
+//					}
+//					setVisible(false);
+//					
+//				}
+
 				if(signalsLabelList.getSelectedValues() != null && signalsLabelList.getSelectedValues().length > 0){
 					
 					analysisParametersDialog.saveInterval(univariateController);
-					SelectedSignal[] signals = new SelectedSignal[signalsLabelList.getSelectedValues().length];
+//					SelectedSignal[] signals = new SelectedSignal[signalsLabelList.getSelectedValues().length];
 					for(int i = 0; i < signalsLabelList.getSelectedValues().length; i++){
-						signals[i] = (SelectedSignal)signalsLabelList.getSelectedValues()[i];
+						SelectedSignal[] signals = new SelectedSignal[1];
+						signals[0] = (SelectedSignal)signalsLabelList.getSelectedValues()[i];
+						univariateController.getSelectedFeatures().get(0).getSignals().add(signals);
 					}
-					univariateController.getSelectedFeatures().get(0).setSignals(signals);
+					
 					if(wekaCsvDialog.getWekaCheckBox().isSelected()){
 						
 						if(wekaCsvDialog.getMovingWindowCheckBox().isSelected()){
@@ -412,25 +433,40 @@ public class ExtractUnivariateFeaturesWindow extends JDialog {
 							}
 								
 							for(int i = 1; i < univariateController.getSelectedFeatures().size(); i++){
-								univariateController.getSelectedFeatures().get(i).setSignals(signals);
+								for(int j = 0; j < univariateController.getSelectedFeatures().get(0).getSignals().size(); j++){
+									SelectedSignal[] signals = univariateController.getSelectedFeatures().get(0).getSignals().get(j);
+									univariateController.getSelectedFeatures().get(i).getSignals().add(signals);
+								}
 								HashMap<String, Boolean> features = univariateController.getSelectedFeatures().get(0).getFeatures();								
 								univariateController.getSelectedFeatures().get(i).setFeatures(features);
+							
 							}
 							if(wekaCsvDialog.getRemoveUnknownCheckBox().isSelected()){
 								univariateController.removeUnknownOptions();
 							}
 						}
 						if(wekaCsvDialog.getMultivariateCheckBox().isSelected()){
-							univariateController.getExtractMixedFeaturesController().setOutputFileType(univariateController.WEKA_CSV);
-							if(createButton.isSelected()){
-								univariateController.getExtractMixedFeaturesController().beginFeatureExtraction(false);
-								setVisible(false);
-								return;
+							if(signalsLabelList.getSelectedValues() != null && signalsLabelList.getSelectedValues().length > 1){
+								univariateController.getExtractMixedFeaturesController().setOutputFileType(univariateController.WEKA_CSV);
+//								for(int i = 1; i < univariateController.getSelectedFeatures().size(); i++){
+//									univariateController.getSelectedFeatures().get(i).setSignals(signals);
+//									HashMap<String, Boolean> features = univariateController.getSelectedFeatures().get(0).getFeatures();								
+//									univariateController.getSelectedFeatures().get(i).setFeatures(features);
+//								}
+								
+								if(createButton.isSelected()){
+									univariateController.getExtractMixedFeaturesController().beginFeatureExtraction(false);
+									setVisible(false);
+									return;
+								}
+								else {
+									univariateController.getExtractMixedFeaturesController().beginFeatureExtraction(true);
+									setVisible(false);
+									return;
+								}
 							}
-							else {
-								univariateController.getExtractMixedFeaturesController().beginFeatureExtraction(true);
-								setVisible(false);
-								return;
+							else{
+								JOptionPane.showMessageDialog(null, "At least two signals should be selected!", "Extraction error", JOptionPane.ERROR_MESSAGE);
 							}
 							
 						}
@@ -468,15 +504,15 @@ public class ExtractUnivariateFeaturesWindow extends JDialog {
 		double overlappingSeconds = percent*window / 100;
 		Double[] interval = univariateController.getSelectedFeatures().get(0).getTimeInterval().get(0);
 		
-		SelectedSignal[] signals = univariateController.getSelectedFeatures().get(0).getSignals();
-		double minLength = signals[0].getFile().calculateDuration(signals[0].getSignalIndex());
-		for(int i = 1; i < signals.length; i++){
-			double length = signals[i].getFile().calculateDuration(signals[i].getSignalIndex());
+		SelectedSignal s = univariateController.getSelectedFeatures().get(0).getSignals().get(0)[0];
+		double minLength =  s.getFile().calculateDuration(s.getSignalIndex());
+		for(int index = 1; index < univariateController.getSelectedFeatures().size(); index++){
+			s = univariateController.getSelectedFeatures().get(index).getSignals().get(0)[0];	
+			double length = s.getFile().calculateDuration(s.getSignalIndex());			
 			if(length < minLength){
 				minLength = length;
 			}
 		}
-
 		if(interval[1] != 0){		
 			if(Math.min(minLength,interval[1])-interval[0] < window){
 				JOptionPane.showMessageDialog(null, "Moving window analysis for selected interval with selected parameters is impossible!\n"+"Size of window is larger than interval");
@@ -511,6 +547,17 @@ public class ExtractUnivariateFeaturesWindow extends JDialog {
 		}
 		
 		return true;
+	}
+	public void saveMultivariateIntervals(){
+		//GENERIRANJE SELECTED SIGNALA
+		ArrayList<Double[]> timeIntervalFirst = univariateController.getSelectedFeatures().get(0).getTimeInterval();
+		univariateController.getExtractMixedFeaturesController().getExtractMultivariateFeaturesController().getSelectedFeatures().get(0).setTimeInterval(timeIntervalFirst);
+		for(int i = 1; i < univariateController.getSelectedFeatures().size(); i++){
+			Features f = new MultivariateFeatures();
+			ArrayList<Double[]> timeInterval = univariateController.getSelectedFeatures().get(i).getTimeInterval();
+			f.setTimeInterval(timeInterval);
+			univariateController.getExtractMixedFeaturesController().getExtractMultivariateFeaturesController().getSelectedFeatures().add(f);
+		}
 	}
 
 	private synchronized void showAnalysisParametersDialog(){

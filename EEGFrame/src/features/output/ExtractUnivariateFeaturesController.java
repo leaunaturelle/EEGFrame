@@ -45,14 +45,16 @@ public class ExtractUnivariateFeaturesController extends ExtractFeaturesControll
 	public synchronized ExtractUnivariateFeaturesWindow getExtractUnivariateFeaturesWindow() {
 		if(extractUnivariateFeaturesWindow == null){
 			extractUnivariateFeaturesWindow = new ExtractUnivariateFeaturesWindow(this);
-			selectedFeatures = new ArrayList<Features>();
-			selectedFeatures.add(new UnivariateFeatures());
+//			selectedFeatures = new ArrayList<Features>();
+//			selectedFeatures.add(new UnivariateFeatures());
 		}
 		return extractUnivariateFeaturesWindow;
 	}
 	
 	public ExtractUnivariateFeaturesController(){
 		featuresType = UNIVARIATE_FEATURES;
+		selectedFeatures = new ArrayList<Features>();
+		selectedFeatures.add(new UnivariateFeatures());
 	}
 	
 	public void setUnivariateFeaturesSignalsList(SelectedSignal[] signals){
@@ -69,8 +71,8 @@ public class ExtractUnivariateFeaturesController extends ExtractFeaturesControll
 		UnivariateFeatures features = (UnivariateFeatures) selectedFeatures.get(0);
 		
 		for(int k = 0; k < selectedFeatures.size(); k++){
-			HashMap<String, String>[] map =  (HashMap<String, String>[])new HashMap[features.getSignals().length];
-			for(int i = 0; i < features.getSignals().length; i++){
+			HashMap<String, String>[] map =  (HashMap<String, String>[])new HashMap[features.getSignals().size()];
+			for(int i = 0; i < features.getSignals().size(); i++){
 				map[i] = new HashMap<String, String>();
 				for(int j = 0; j < features.getOptionsToPrint().size(); j++){
 					map[i].put(features.getOptionsToPrint().get(j), "?");
@@ -87,9 +89,9 @@ public class ExtractUnivariateFeaturesController extends ExtractFeaturesControll
 			Long[] samples = new Long[2];
 			if(features.getSampleInterval() != null){
 				samples = features.getSampleInterval().get(0);				
-				for(int i = 0; i < features.getSignals().length; i++){
+				for(int i = 0; i < features.getSignals().size(); i++){
 //					index = features.getIndex();
-					signal = features.getSignals()[i];
+					signal = features.getSignals().get(i)[0];
 					file = signal.getFile();
 					long samplesLength = samples[1];
 					if(samplesLength == 0){
@@ -102,8 +104,9 @@ public class ExtractUnivariateFeaturesController extends ExtractFeaturesControll
 					features.getExtractedFeatures()[i].put(UnivariateFeatures.SEGMENT_LENGTH_SAMPLES, Long.toString(samplesLength));
 				}
 			}
-			for(int i = 0; i < features.getSignals().length; i++){
-				signal = features.getSignals()[i];
+			for(int i = 0; i < features.getSignals().size(); i++){
+			
+				signal = features.getSignals().get(i)[0];
 				file = signal.getFile();
 				if(features.getTimeInterval() != null){
 //					System.out.println("Evo me nize u kodu, Interval broj " + featuresInterval);
@@ -118,7 +121,7 @@ public class ExtractUnivariateFeaturesController extends ExtractFeaturesControll
 					else{
 						samples[1] = Math.min(file.calculateSampleFromTime(time[1], signal.getSignalIndex()), file.calculateSignalSamplesNum(signal.getSignalIndex()));
 					}
-					for(int k = 0; k < features.getSignals().length; k++){
+					for(int k = 0; k < features.getSignals().size(); k++){
 						features.getExtractedFeatures()[k].put(UnivariateFeatures.START_TIME, Double.toString(time[0]));
 						features.getExtractedFeatures()[k].put(UnivariateFeatures.SEGMENT_LENGTH_SEC, Double.toString(time[1]-time[0]));
 					}
@@ -129,7 +132,8 @@ public class ExtractUnivariateFeaturesController extends ExtractFeaturesControll
 				double[] series = file.getSamplesFromInterval(signal.getSignalIndex(), startSample, endSample);
 				features.getExtractedFeatures()[i].put(UnivariateFeatures.FILE_LABEL, file.getName());
 				features.getExtractedFeatures()[i].put(UnivariateFeatures.SIGNAL_LABEL, signal.getSignalLabel());
-
+				
+				System.out.println("featuresInterval " + featuresInterval + "signal " + signal.getSignalLabel());
 				calculateUnivariateFeatures(features, series, i, file, signal);
 
 			}

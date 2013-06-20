@@ -14,7 +14,8 @@ import gui.SelectedSignal;
  */
 public abstract class Features {
 //	protected String featuresType;
-	protected SelectedSignal[] signals;
+	protected ArrayList<SelectedSignal[]> signals;
+	
 	protected ArrayList<Long[]> sampleInterval;
 	protected ArrayList<Double[]> timeInterval;
 	protected ArrayList<String> optionsToPrint;
@@ -64,14 +65,6 @@ public abstract class Features {
 		this.features = features;
 	}
 
-	public SelectedSignal[] getSignals() {
-		return signals;
-	}
-
-	public void setSignals(SelectedSignal[] signals) {
-		this.signals = signals;
-	}
-
 	public ArrayList<Long[]> getSampleInterval() {
 		return sampleInterval;
 	}
@@ -95,6 +88,14 @@ public abstract class Features {
 	public void setTimeInterval(ArrayList<Double[]> timeInterval) {
 		this.timeInterval = timeInterval;
 	}
+	public ArrayList<SelectedSignal[]> getSignals() {
+		return signals;
+	}
+
+	public void setSignals(ArrayList<SelectedSignal[]> signals) {
+		this.signals = signals;
+	}
+
 	
 	public static final String FILE_LABEL = "File_label";
 	public static final String SIGNAL_LABEL = "Signal_label";
