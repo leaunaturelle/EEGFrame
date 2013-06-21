@@ -3,7 +3,13 @@
  */
 package features.output;
 
+import gui.SelectedSignal;
+
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author lsuc
@@ -13,6 +19,7 @@ public class MultivariateFeatures extends Features {
 
 	public MultivariateFeatures(){
 //		featuresType = "MultivariateFeatures";
+		signals = new ArrayList<SelectedSignal[]>();
 		features.put(MUTUAL_DIM, false);
 		features.put(SYNCHRO_LIKELIHOOD, false);
 		features.put(CROSS_RECURRENCE, false);
@@ -23,6 +30,7 @@ public class MultivariateFeatures extends Features {
 		features.put(CRP_SHANNON, false);
 		
 		createOptionsToPrint();
+		createOptionsToPrintNoParams();
 	}
 	
 	public void createOptionsToPrint(){
@@ -45,6 +53,15 @@ public class MultivariateFeatures extends Features {
 		optionsToPrint.add(CRP_RATE);
 		optionsToPrint.add(CRP_SHANNON);
 	}
+	public void createOptionsToPrintNoParams(){
+		optionsToPrintNoParams = new ArrayList<String>(); 
+		optionsToPrintNoParams.add(MUTUAL_DIM);
+		optionsToPrintNoParams.add(CRP_DET);
+		optionsToPrintNoParams.add(CRP_LAM);
+		optionsToPrintNoParams.add(CRP_LMEAN);
+		optionsToPrintNoParams.add(CRP_RATE);
+		optionsToPrintNoParams.add(CRP_SHANNON);
+	}
 	/* (non-Javadoc)
 	 * @see features.output.Features#getLabel()
 	 */
@@ -55,12 +72,12 @@ public class MultivariateFeatures extends Features {
 //			labelBuilder.append(getLabel(i));
 //		}
 //		return labelBuilder.toString();
-		return "HOHOHO";
+		return "";
 	}
 	
 	public String getLabel(int index) {
 //		return signals[index].getSignalLabel();
-		return "Santa_baby";
+		return "";
 	}
 
 	public static final String MUTUAL_DIM = "Mutual_dim";
@@ -74,4 +91,7 @@ public class MultivariateFeatures extends Features {
 	public static final String CRP_LAM = "CRP_Laminarity";
 	public static final String SYNCHRO_LIKELIHOOD_LABEL = "Synchronization_likelihood_label";
 	public static final String SYNCHRO_LIKELIHOOD_VALUE = "Synchronization_likelihood_value";
+	
+	static final String[] SET_VALUES = new String[] {MUTUAL_DIM, CRP_RATE, CRP_LMEAN, CRP_DET, CRP_SHANNON, CRP_LAM};
+	public static final Set<String> MULTIVARIATE_SET = new HashSet<String>(Arrays.asList(SET_VALUES));
 }

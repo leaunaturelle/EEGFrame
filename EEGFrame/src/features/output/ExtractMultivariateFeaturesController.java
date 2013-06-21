@@ -5,6 +5,8 @@ package features.output;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 import statisticMeasure.Statistics;
 
@@ -91,8 +93,9 @@ public class ExtractMultivariateFeaturesController extends
 							samplesLength -= samples[0];
 						}
 					}
-					features.getExtractedFeatures()[i].put(MultivariateFeatures.START_SAMPLE, Long.toString(samples[0]));
-					features.getExtractedFeatures()[i].put(MultivariateFeatures.SEGMENT_LENGTH_SAMPLES, Long.toString(maxSamplesLength));
+					//MISLIM DA TU MORA BITI featuresInterval umjesto i, popraviti
+//					features.getExtractedFeatures()[i].put(MultivariateFeatures.START_SAMPLE, Long.toString(samples[0]));
+//					features.getExtractedFeatures()[i].put(MultivariateFeatures.SEGMENT_LENGTH_SAMPLES, Long.toString(maxSamplesLength));
 				}				
 				
 			}
@@ -125,8 +128,8 @@ public class ExtractMultivariateFeaturesController extends
 //						}	
 					
 					}
-					features.getExtractedFeatures()[featuresInterval].put(MultivariateFeatures.START_TIME, Double.toString(time[0]));
-					features.getExtractedFeatures()[featuresInterval].put(MultivariateFeatures.SEGMENT_LENGTH_SEC, Double.toString(maxTimeLength));
+					features.getExtractedFeatures()[i].put(MultivariateFeatures.START_TIME, Double.toString(time[0]));
+					features.getExtractedFeatures()[i].put(MultivariateFeatures.SEGMENT_LENGTH_SEC, Double.toString(maxTimeLength));
 				}
 			}				
 				
@@ -159,6 +162,7 @@ public class ExtractMultivariateFeaturesController extends
 
 			int finesse = Integer.parseInt(extractMultivariateFeaturesWindow.getNonlinearMultivariateFeaturesDialog().getFinesseTextField().getText());
 			double mutualDim = MutualDimension.calculateMutualDimension(series[0], series[1], phaseSpaceDim1, phaseSpaceDim2, phaseSpaceLag1, phaseSpaceLag2, finesse);
+			System.out.println("mutual dim je " + mutualDim + "skup signala u trenutnom intervalu " + i);
 			selectedFeatures.getExtractedFeatures()[i].put(MultivariateFeatures.MUTUAL_DIM, Double.toString(mutualDim));
 		}
 		if(selectedFeatures.getFeatures().get(MultivariateFeatures.CROSS_RECURRENCE)){
@@ -199,6 +203,24 @@ public class ExtractMultivariateFeaturesController extends
 			}
 		}
 	}
+	public void removeUnknownOptions(){
+		ArrayList<Features> f = getSelectedFeatures();
+		for(int i = 0; i < f.size(); i++){
+			MultivariateFeatures multivariateFeatures = (MultivariateFeatures) f.get(i);
+			System.out.println("velicina options to print za " + i +" je "+ multivariateFeatures.getOptionsToPrintNoParams().size());
+			Iterator featuresIt = multivariateFeatures.getFeatures().entrySet().iterator();
+		    while (featuresIt.hasNext()) {
+		        Map.Entry pairs = (Map.Entry)featuresIt.next();
+		        if((Boolean) pairs.getValue() == false){
+		        	multivariateFeatures.getOptionsToPrint().remove(pairs.getKey());
+		        	multivariateFeatures.getOptionsToPrintNoParams().remove(pairs.getKey());
+
+		        }	
+
+		    }
+        	System.out.println("velicina options to print za " + i +" je "+ multivariateFeatures.getOptionsToPrintNoParams().size());
+		}
 	
+	}
 
 }

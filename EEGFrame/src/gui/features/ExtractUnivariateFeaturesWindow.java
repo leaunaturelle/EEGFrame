@@ -415,9 +415,11 @@ public class ExtractUnivariateFeaturesWindow extends JDialog {
 					
 					analysisParametersDialog.saveInterval(univariateController);
 //					SelectedSignal[] signals = new SelectedSignal[signalsLabelList.getSelectedValues().length];
+					SelectedSignal[] multiSignals = new SelectedSignal[signalsLabelList.getSelectedValues().length];
 					for(int i = 0; i < signalsLabelList.getSelectedValues().length; i++){
 						SelectedSignal[] signals = new SelectedSignal[1];
 						signals[0] = (SelectedSignal)signalsLabelList.getSelectedValues()[i];
+						multiSignals[i] = (SelectedSignal)signalsLabelList.getSelectedValues()[i];
 						univariateController.getSelectedFeatures().get(0).getSignals().add(signals);
 					}
 					
@@ -448,12 +450,20 @@ public class ExtractUnivariateFeaturesWindow extends JDialog {
 						if(wekaCsvDialog.getMultivariateCheckBox().isSelected()){
 							if(signalsLabelList.getSelectedValues() != null && signalsLabelList.getSelectedValues().length > 1){
 								univariateController.getExtractMixedFeaturesController().setOutputFileType(univariateController.WEKA_CSV);
-//								for(int i = 1; i < univariateController.getSelectedFeatures().size(); i++){
-//									univariateController.getSelectedFeatures().get(i).setSignals(signals);
-//									HashMap<String, Boolean> features = univariateController.getSelectedFeatures().get(0).getFeatures();								
-//									univariateController.getSelectedFeatures().get(i).setFeatures(features);
-//								}
+								univariateController.getExtractMixedFeaturesController().getExtractMultivariateFeaturesController().getSelectedFeatures().get(0).getSignals().add(multiSignals);
+								saveMultivariateIntervals();
+								for(int i = 1; i < univariateController.getExtractMixedFeaturesController().getExtractMultivariateFeaturesController().getSelectedFeatures().size(); i++){
+									for(int j = 0; j < univariateController.getExtractMixedFeaturesController().getExtractMultivariateFeaturesController().getSelectedFeatures().get(0).getSignals().size(); j++){
+										SelectedSignal[] signals = univariateController.getExtractMixedFeaturesController().getExtractMultivariateFeaturesController().getSelectedFeatures().get(0).getSignals().get(j);
+										univariateController.getExtractMixedFeaturesController().getExtractMultivariateFeaturesController().getSelectedFeatures().get(i).getSignals().add(signals);
+									}
+									HashMap<String, Boolean> features = univariateController.getExtractMixedFeaturesController().getExtractMultivariateFeaturesController().getSelectedFeatures().get(0).getFeatures();								
+									univariateController.getExtractMixedFeaturesController().getExtractMultivariateFeaturesController().getSelectedFeatures().get(i).setFeatures(features);
 								
+								}
+								if(wekaCsvDialog.getRemoveUnknownCheckBox().isSelected()){
+									univariateController.getExtractMixedFeaturesController().getExtractMultivariateFeaturesController().removeUnknownOptions();
+								}
 								if(createButton.isSelected()){
 									univariateController.getExtractMixedFeaturesController().beginFeatureExtraction(false);
 									setVisible(false);

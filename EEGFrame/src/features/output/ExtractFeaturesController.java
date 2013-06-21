@@ -5,6 +5,8 @@ package features.output;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Vector;
 
 import javax.swing.JDialog;
@@ -93,7 +95,7 @@ public abstract class ExtractFeaturesController {
 	public void setWaitDialog(JDialog waitDialog) {
 		this.waitDialog = waitDialog;
 	}
-
+	
 	public void createWaitDialog(){
 		//TODO dodati kursor za cekanje
         waitDialog = new JDialog();

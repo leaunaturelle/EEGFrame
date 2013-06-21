@@ -39,6 +39,8 @@ public class ExtractFeaturesWorker extends SwingWorker<Boolean, Void> {
 		
 		try {
 			extractionOutputFile.writeToFile(extractionController.getSelectedFeatures(), append);
+		
+			
 		} catch(IOException e){
 			// TODO Auto-generated catch block
 			System.out.println("File not found. Sorry for the inconvenience.");
