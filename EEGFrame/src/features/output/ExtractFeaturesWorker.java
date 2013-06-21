@@ -57,6 +57,7 @@ public class ExtractFeaturesWorker extends SwingWorker<Boolean, Void> {
 			 if(done){
 				 extractionController.getWaitDialog().setVisible(false);
 				 extractionController.setWaitDialog(null); 
+				 extractionController.createNewExtractFeaturesController();
 			 }
 	        } catch (InterruptedException ignore) {}
 	        catch (java.util.concurrent.ExecutionException e) {

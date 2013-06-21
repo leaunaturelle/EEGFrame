@@ -75,4 +75,16 @@ public class ExtractMixedFeaturesController extends ExtractFeaturesController {
 			ExtractMultivariateFeaturesController extractMultivariateFeaturesController) {
 		this.extractMultivariateFeaturesController = extractMultivariateFeaturesController;
 	}
+	/* (non-Javadoc)
+	 * @see features.output.ExtractFeaturesController#createNewExtractFeaturesController()
+	 */
+	@Override
+	public void createNewExtractFeaturesController() {
+		ExtractUnivariateFeaturesController univariate = new ExtractUnivariateFeaturesController();
+		ExtractMultivariateFeaturesController multivariate = new ExtractMultivariateFeaturesController();
+		univariate.setExtractMixedFeaturesController(this);
+//		multivariate.setEx
+		this.setExtractUnivariateFeaturesController(univariate);
+		this.setExtractMultivariateFeaturesController(multivariate);
+	}
 }

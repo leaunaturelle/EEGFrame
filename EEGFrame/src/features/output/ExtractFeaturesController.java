@@ -29,6 +29,8 @@ public abstract class ExtractFeaturesController {
 	protected String outputFileType;
 	protected String featuresType;
 	
+	public abstract void createNewExtractFeaturesController();
+	
 	public String getOutputFileType() {
 		return outputFileType;
 	}

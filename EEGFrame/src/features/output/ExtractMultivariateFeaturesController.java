@@ -28,6 +28,7 @@ public class ExtractMultivariateFeaturesController extends
 	 */
 	
 	private ExtractMultivariateFeaturesWindow extractMultivariateFeaturesWindow;
+	private ExtractMixedFeaturesController extractMixedFeaturesController;
 
 	public ExtractMultivariateFeaturesController(){
 		featuresType = MULTIVARIATE_FEATURES;
@@ -221,6 +222,26 @@ public class ExtractMultivariateFeaturesController extends
         	System.out.println("velicina options to print za " + i +" je "+ multivariateFeatures.getOptionsToPrintNoParams().size());
 		}
 	
+	}
+
+	/* (non-Javadoc)
+	 * @see features.output.ExtractFeaturesController#createNewExtractFeaturesController()
+	 */
+	@Override
+	public void createNewExtractFeaturesController() {
+		ExtractMultivariateFeaturesController controller = new ExtractMultivariateFeaturesController();
+		controller.setExtractMixedFeaturesController(extractMixedFeaturesController);
+		extractMixedFeaturesController.setExtractMultivariateFeaturesController(controller);
+		
+	}
+
+	public ExtractMixedFeaturesController getExtractMixedFeaturesController() {
+		return extractMixedFeaturesController;
+	}
+
+	public void setExtractMixedFeaturesController(
+			ExtractMixedFeaturesController extractMixedFeaturesController) {
+		this.extractMixedFeaturesController = extractMixedFeaturesController;
 	}
 
 }

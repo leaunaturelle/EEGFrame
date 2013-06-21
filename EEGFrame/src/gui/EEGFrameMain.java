@@ -66,6 +66,7 @@ public class EEGFrameMain {
 		ExtractMultivariateFeaturesController extractMultivariateFeaturesController = new ExtractMultivariateFeaturesController();
 		ExtractMixedFeaturesController extractMixedFeaturesController = new ExtractMixedFeaturesController(extractUnivariateFeaturesController, extractMultivariateFeaturesController);
 		extractUnivariateFeaturesController.setExtractMixedFeaturesController(extractMixedFeaturesController);
+		extractMultivariateFeaturesController.setExtractMixedFeaturesController(extractMixedFeaturesController);
 		PanelController pc = new PanelController(frame, panel, extractMixedFeaturesController);		
 		scrollPane.getHorizontalScrollBar().addAdjustmentListener(pc);
 		Controller c = new Controller(frame, pc);

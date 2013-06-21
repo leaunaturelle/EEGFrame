@@ -293,5 +293,4 @@ public class PanelController implements AdjustmentListener {
 	public void setStartPoint(boolean isStartPoint) {
 		this.isStartPoint = isStartPoint;
 	}
-
 }

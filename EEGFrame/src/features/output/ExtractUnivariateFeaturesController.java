@@ -414,4 +414,14 @@ public class ExtractUnivariateFeaturesController extends ExtractFeaturesControll
 			ExtractMixedFeaturesController extractMixedFeaturesController) {
 		this.extractMixedFeaturesController = extractMixedFeaturesController;
 	}
+
+	/* (non-Javadoc)
+	 * @see features.output.ExtractFeaturesController#createNewExtractFeaturesController()
+	 */
+	@Override
+	public void createNewExtractFeaturesController() {
+		ExtractUnivariateFeaturesController controller = new ExtractUnivariateFeaturesController();
+		controller.setExtractMixedFeaturesController(extractMixedFeaturesController);
+		extractMixedFeaturesController.setExtractUnivariateFeaturesController(controller);
+	}
 }
