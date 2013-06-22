@@ -83,7 +83,7 @@ public class ExtractMixedFeaturesController extends ExtractFeaturesController {
 		ExtractUnivariateFeaturesController univariate = new ExtractUnivariateFeaturesController();
 		ExtractMultivariateFeaturesController multivariate = new ExtractMultivariateFeaturesController();
 		univariate.setExtractMixedFeaturesController(this);
-//		multivariate.setEx
+		multivariate.setExtractMixedFeaturesController(this);
 		this.setExtractUnivariateFeaturesController(univariate);
 		this.setExtractMultivariateFeaturesController(multivariate);
 	}

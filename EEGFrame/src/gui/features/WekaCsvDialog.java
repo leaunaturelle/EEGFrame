@@ -4,6 +4,8 @@
 package gui.features;
 
 import features.output.ExtractUnivariateFeaturesController;
+import features.output.Features;
+import features.output.UnivariateFeatures;
 import gui.EEGFrameMain;
 import gui.SelectedSignal;
 
@@ -202,6 +204,49 @@ public class WekaCsvDialog extends JDialog {
 
 		panel.add(new JSeparator());
 		panel.add(Box.createRigidArea(new Dimension(5,10)));
+		JPanel buttonPanel = new JPanel();
+		panel.add(buttonPanel);
+		buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
+		buttonPanel.add(Box.createHorizontalGlue());
+		JButton selectAllButton = new JButton("Select all");
+		selectAllButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				wekaCheckBox.setSelected(true);
+				movingWindowCheckBox.setSelected(true);
+				removeUnknownCheckBox.setSelected(true);
+				multivariateCheckBox.setSelected(true);
+			}
+		});
+		buttonPanel.add(selectAllButton);
+		buttonPanel.add(Box.createHorizontalGlue());
+		JButton clearAllButton = new JButton("Clear all");
+		clearAllButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				wekaCheckBox.setSelected(false);
+				movingWindowCheckBox.setSelected(false);
+				removeUnknownCheckBox.setSelected(false);
+				multivariateCheckBox.setSelected(false);
+				
+			}
+		});
+		buttonPanel.add(clearAllButton);
+		buttonPanel.add(Box.createHorizontalGlue());
+		JButton okButton = new JButton("OK");
+		okButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {				
+				setVisible(false);
+			}
+		});
+		buttonPanel.add(okButton);
+		buttonPanel.add(Box.createHorizontalGlue());
+		panel.add(Box.createRigidArea(new Dimension(5,10)));
+		
 		return panel;
 	}
 	
