@@ -415,11 +415,11 @@ public class ExtractUnivariateFeaturesWindow extends JDialog {
 					
 					analysisParametersDialog.saveInterval(univariateController);
 //					SelectedSignal[] signals = new SelectedSignal[signalsLabelList.getSelectedValues().length];
-					SelectedSignal[] multiSignals = new SelectedSignal[signalsLabelList.getSelectedValues().length];
+//					SelectedSignal[] multiSignals = new SelectedSignal[signalsLabelList.getSelectedValues().length];
 					for(int i = 0; i < signalsLabelList.getSelectedValues().length; i++){
 						SelectedSignal[] signals = new SelectedSignal[1];
 						signals[0] = (SelectedSignal)signalsLabelList.getSelectedValues()[i];
-						multiSignals[i] = (SelectedSignal)signalsLabelList.getSelectedValues()[i];
+//						multiSignals[i] = (SelectedSignal)signalsLabelList.getSelectedValues()[i];
 						univariateController.getSelectedFeatures().get(0).getSignals().add(signals);
 					}
 					
@@ -447,38 +447,29 @@ public class ExtractUnivariateFeaturesWindow extends JDialog {
 								univariateController.removeUnknownOptions();
 							}
 						}
-						if(wekaCsvDialog.getMultivariateCheckBox().isSelected()){
-							if(signalsLabelList.getSelectedValues() != null && signalsLabelList.getSelectedValues().length > 1){
-								univariateController.getExtractMixedFeaturesController().setOutputFileType(univariateController.WEKA_CSV);
-								univariateController.getExtractMixedFeaturesController().getExtractMultivariateFeaturesController().getSelectedFeatures().get(0).getSignals().add(multiSignals);
-								saveMultivariateIntervals();
-								for(int i = 1; i < univariateController.getExtractMixedFeaturesController().getExtractMultivariateFeaturesController().getSelectedFeatures().size(); i++){
-									for(int j = 0; j < univariateController.getExtractMixedFeaturesController().getExtractMultivariateFeaturesController().getSelectedFeatures().get(0).getSignals().size(); j++){
-										SelectedSignal[] signals = univariateController.getExtractMixedFeaturesController().getExtractMultivariateFeaturesController().getSelectedFeatures().get(0).getSignals().get(j);
-										univariateController.getExtractMixedFeaturesController().getExtractMultivariateFeaturesController().getSelectedFeatures().get(i).getSignals().add(signals);
-									}
-									HashMap<String, Boolean> features = univariateController.getExtractMixedFeaturesController().getExtractMultivariateFeaturesController().getSelectedFeatures().get(0).getFeatures();								
-									univariateController.getExtractMixedFeaturesController().getExtractMultivariateFeaturesController().getSelectedFeatures().get(i).setFeatures(features);
-								
-								}
-								if(wekaCsvDialog.getRemoveUnknownCheckBox().isSelected()){
-									univariateController.getExtractMixedFeaturesController().getExtractMultivariateFeaturesController().removeUnknownOptions();
-								}
-								if(createButton.isSelected()){
-									univariateController.getExtractMixedFeaturesController().beginFeatureExtraction(false);
-									setVisible(false);
-									return;
-								}
-								else {
-									univariateController.getExtractMixedFeaturesController().beginFeatureExtraction(true);
-									setVisible(false);
-									return;
-								}
-							}
-							else{
-								JOptionPane.showMessageDialog(null, "At least two signals should be selected!", "Extraction error", JOptionPane.ERROR_MESSAGE);
-							}
+						if(wekaCsvDialog.getMultivariateCheckBox().isSelected()){	
+							univariateController.getExtractMixedFeaturesController().setOutputFileType(univariateController.WEKA_CSV);
+
+							saveMultivariateIntervals();
+							for(int i = 1; i < univariateController.getExtractMixedFeaturesController().getExtractMultivariateFeaturesController().getSelectedFeatures().size(); i++){
+								univariateController.getExtractMixedFeaturesController().getExtractMultivariateFeaturesController().getSelectedFeatures().get(i).setSignals(univariateController.getExtractMixedFeaturesController().getExtractMultivariateFeaturesController().getSelectedFeatures().get(0).getSignals());								
+								HashMap<String, Boolean> features = univariateController.getExtractMixedFeaturesController().getExtractMultivariateFeaturesController().getSelectedFeatures().get(0).getFeatures();								
+								univariateController.getExtractMixedFeaturesController().getExtractMultivariateFeaturesController().getSelectedFeatures().get(i).setFeatures(features);
 							
+							}
+							if(wekaCsvDialog.getRemoveUnknownCheckBox().isSelected()){
+								univariateController.getExtractMixedFeaturesController().getExtractMultivariateFeaturesController().removeUnknownOptions();
+							}
+							if(createButton.isSelected()){
+								univariateController.getExtractMixedFeaturesController().beginFeatureExtraction(false);
+								setVisible(false);
+								return;
+							}
+							else {
+								univariateController.getExtractMixedFeaturesController().beginFeatureExtraction(true);
+								setVisible(false);
+								return;
+							}
 						}
 						else{
 							univariateController.setOutputFileType(univariateController.WEKA_CSV);
@@ -496,7 +487,7 @@ public class ExtractUnivariateFeaturesWindow extends JDialog {
 					}
 					setVisible(false);
 					
-				}
+				}	
 				else{
 					JOptionPane.showMessageDialog(null, "At least one signal should be selected!", "Extraction error", JOptionPane.ERROR_MESSAGE);
 				}
@@ -549,12 +540,12 @@ public class ExtractUnivariateFeaturesWindow extends JDialog {
 			f.setTimeInterval(timeInterval);
 			univariateController.getSelectedFeatures().add(f);
 		}
-		System.out.println("Ukupno " + univariateController.getSelectedFeatures().size()+ " intervala");
-		System.out.println("window je velicine " + window + " a postotak " + percent + " pa je overlapping dio " + overlappingSeconds);
-		for(int i = 0; i < univariateController.getSelectedFeatures().size(); i++){
-			Double[] intervaaaal = univariateController.getSelectedFeatures().get(i).getTimeInterval().get(0);
-			System.out.println("Interval "+i + ": " + intervaaaal[0] + " - " + intervaaaal[1]);
-		}
+//		System.out.println("Ukupno " + univariateController.getSelectedFeatures().size()+ " intervala");
+//		System.out.println("window je velicine " + window + " a postotak " + percent + " pa je overlapping dio " + overlappingSeconds);
+//		for(int i = 0; i < univariateController.getSelectedFeatures().size(); i++){
+//			Double[] intervaaaal = univariateController.getSelectedFeatures().get(i).getTimeInterval().get(0);
+//			System.out.println("Interval "+i + ": " + intervaaaal[0] + " - " + intervaaaal[1]);
+//		}
 		
 		return true;
 	}
@@ -671,7 +662,15 @@ public class ExtractUnivariateFeaturesWindow extends JDialog {
 			signalsLabelModel.addElement(signals[i]);
 		}
 	}
-
+	public SelectedSignal[] getSignalsList(){
+		DefaultListModel signalsLabelModel = (DefaultListModel) this.signalsLabelList.getModel();
+		SelectedSignal[] signals = new SelectedSignal[signalsLabelModel.size()];
+		for(int i = 0; i < signals.length; i++){
+			signals[i] = (SelectedSignal) signalsLabelModel.get(i);
+		}
+		return signals;
+	}
+	
 	public ExtractUnivariateFeaturesController getUnivariateController() {
 		return univariateController;
 	}

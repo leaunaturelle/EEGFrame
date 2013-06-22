@@ -240,13 +240,7 @@ public class ExtractMultivariateFeaturesWindow extends JDialog {
 		return panel;
 	}
 	
-	public void setSignalsLabelList(SelectedSignal[] signals) {
-		DefaultListModel signalsLabelModel = (DefaultListModel) this.signalsLabelList.getModel();
-		signalsLabelModel.clear();
-		for(int i = 0; i < signals.length; i++){
-			signalsLabelModel.addElement(signals[i]);
-		}
-	}
+
 	public synchronized void showNonlinearMultivariateFeaturesDialog(){
 		if(nonlinearMultivariateFeaturesDialog == null){
 			nonlinearMultivariateFeaturesDialog = new NonlinearMultivariateFeaturesDialog(multivariateController);
@@ -275,5 +269,12 @@ public class ExtractMultivariateFeaturesWindow extends JDialog {
 	public void setNonlinearMultivariateFeaturesDialog(
 			NonlinearMultivariateFeaturesDialog nonlinearMultivariateFeaturesDialog) {
 		this.nonlinearMultivariateFeaturesDialog = nonlinearMultivariateFeaturesDialog;
+	}
+	public void setSignalsLabelList(SelectedSignal[] signals) {
+		DefaultListModel signalsLabelModel = (DefaultListModel) this.signalsLabelList.getModel();
+		signalsLabelModel.clear();
+		for(int i = 0; i < signals.length; i++){
+			signalsLabelModel.addElement(signals[i]);
+		}
 	}
 }

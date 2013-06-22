@@ -5,6 +5,7 @@ package gui.features;
 
 import features.output.ExtractUnivariateFeaturesController;
 import gui.EEGFrameMain;
+import gui.SelectedSignal;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;

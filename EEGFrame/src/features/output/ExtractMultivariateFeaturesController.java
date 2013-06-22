@@ -4,8 +4,10 @@
 package features.output;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Map;
 
 import statisticMeasure.Statistics;
@@ -220,8 +222,33 @@ public class ExtractMultivariateFeaturesController extends
 
 		    }
         	System.out.println("velicina options to print za " + i +" je "+ multivariateFeatures.getOptionsToPrintNoParams().size());
-		}
-	
+		}	
+	}
+
+	public ArrayList<SelectedSignal[]>  processSubsets(SelectedSignal[] set, int k) {
+		ArrayList<SelectedSignal[]> subsets = new ArrayList<SelectedSignal[]>();
+		SelectedSignal[] subset = new SelectedSignal[k];
+	    processLargerSubsets(set, subset, 0, 0, subsets);
+	    
+	    return subsets;
+	}
+
+	public void processLargerSubsets(SelectedSignal[] set, SelectedSignal[] subset, int subsetSize, int nextIndex, ArrayList<SelectedSignal[]> subsets) {
+	    if (subsetSize == subset.length) {
+	        process(subset, subsets);
+	    } else {
+	        for (int j = nextIndex; j < set.length; j++) {
+	            subset[subsetSize] = set[j];
+	            processLargerSubsets(set, subset, subsetSize + 1, j + 1, subsets);
+	        }
+	    }
+	}
+	public void process(SelectedSignal[] subset, ArrayList<SelectedSignal[]> subsets) {
+		SelectedSignal[] sub = new SelectedSignal[subset.length];
+	    for(int i = 0; i < subset.length; i++){
+	    	sub[i] = subset[i];
+	    }
+	    subsets.add(sub);
 	}
 
 	/* (non-Javadoc)

@@ -4,21 +4,31 @@
 package gui.features;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.DefaultListCellRenderer;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.WindowConstants;
 
 import features.nonlinear.multiSeries.MutualDimension;
@@ -26,6 +36,7 @@ import features.output.ExtractMultivariateFeaturesController;
 import features.output.Features;
 import features.output.MultivariateFeatures;
 import gui.EEGFrameMain;
+import gui.SelectedSignal;
 
 /**
  * @author lsuc
@@ -41,13 +52,14 @@ public class NonlinearMultivariateFeaturesDialog extends JDialog {
 	private ExtractMultivariateFeaturesController multivariateController;
 	private JCheckBox crpCheckBox, crpLamCheckBox, crpRateCheckBox, crpLMeanCheckBox, crpDetCheckBox, crpShannonCheckBox, mutualDimCheckBox;
 	private JTextField  dimensionTextField, lagsTextField, dimension2TextField, lags2TextField, finesseTextField;
+	private JList signalsLabelList;
 	
 	public NonlinearMultivariateFeaturesDialog(ExtractMultivariateFeaturesController multivariateController){
 		EEGFrameMain.checkOnEventDispatchThread();			
 		this.setTitle ("Multivariate nonlinear features");
 		this.multivariateController = multivariateController;
 		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-		this.setPreferredSize(new Dimension(500,500));	
+		this.setPreferredSize(new Dimension(500,600));	
 		this.setLayout(new BorderLayout());
 		JPanel panel = addNonlinearMultivariateFeaturesPanel();
 		this.add(panel, BorderLayout.CENTER);
@@ -150,6 +162,11 @@ public class NonlinearMultivariateFeaturesDialog extends JDialog {
 			public void itemStateChanged(ItemEvent e) {
 				if(e.getStateChange() == ItemEvent.SELECTED){
 					finesseTextField.setEnabled(true);
+					if(signalsLabelList.getModel().getSize() == 0){
+						SelectedSignal[] signals = multivariateController.getExtractMixedFeaturesController().getExtractUnivariateFeaturesController().getExtractUnivariateFeaturesWindow().getSignalsList();
+						setSignalsLabelList(signals);						
+					}
+					
 				}
 				else{
 					finesseTextField.setEnabled(false);
@@ -203,6 +220,10 @@ public class NonlinearMultivariateFeaturesDialog extends JDialog {
 				// TODO Auto-generated method stub
 				if(e.getStateChange() == ItemEvent.SELECTED){
 					setcrpEnabled();
+					if(signalsLabelList.getModel().getSize() == 0){
+						SelectedSignal[] signals = multivariateController.getExtractMixedFeaturesController().getExtractUnivariateFeaturesController().getExtractUnivariateFeaturesWindow().getSignalsList();
+						setSignalsLabelList(signals);						
+					}
                 }
 				else{
 					setcrpDisabled();
@@ -295,6 +316,56 @@ public class NonlinearMultivariateFeaturesDialog extends JDialog {
 		panel.add(crpShannonPanel);
 		panel.add(Box.createRigidArea(new Dimension(5,10)));
 		
+		JPanel signalSelectionPanel = new JPanel();
+		signalSelectionPanel.setLayout(new BoxLayout(signalSelectionPanel, BoxLayout.X_AXIS));
+		signalsLabelList = new JList(new DefaultListModel());
+//		signalsLabelList.setPreferredSize(new Dimension(50,10));
+		signalsLabelList.setVisibleRowCount(5);
+		signalsLabelList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+		JScrollPane signalsLabelSrollPane = new JScrollPane(signalsLabelList);	
+		signalsLabelSrollPane.setBorder(BorderFactory.createTitledBorder("Select signals for feature extraction: "));
+		signalsLabelList.setCellRenderer(new DefaultListCellRenderer(){
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+			public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+				SelectedSignal[] toBeRendered = (SelectedSignal[]) value;
+				StringBuilder b = new StringBuilder();
+				for(int i = 0; i < toBeRendered.length-1; i++){
+					b.append(toBeRendered[i].getSignalLabel().trim());
+					b.append("_");
+				}
+				b.append(toBeRendered[toBeRendered.length-1].getSignalLabel().trim());			
+				setText(b.toString());
+				if(isSelected){
+					setBackground(Color.LIGHT_GRAY);
+				}
+				else{
+					setBackground(null);
+				}
+				return this;
+	        }
+		});
+		signalSelectionPanel.add(Box.createHorizontalGlue());
+		signalSelectionPanel.add(signalsLabelSrollPane);	
+		signalSelectionPanel.add(Box.createHorizontalGlue());
+		JButton selectAllSignalsButton = new JButton("Select All");
+		selectAllSignalsButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int start = 0;
+			    int end = signalsLabelList.getModel().getSize() - 1;
+			    if (end >= 0) {
+			    	signalsLabelList.setSelectionInterval(start, end);
+			    }
+			}
+		});
+		signalSelectionPanel.add(selectAllSignalsButton);
+		signalSelectionPanel.add(Box.createHorizontalGlue());
+		panel.add(signalSelectionPanel);
+		panel.add(Box.createRigidArea(new Dimension(5,10)));
+		
 		panel.add(new JSeparator());
 		panel.add(Box.createRigidArea(new Dimension(5,10)));
 		JPanel buttonPanel = new JPanel();
@@ -337,31 +408,43 @@ public class NonlinearMultivariateFeaturesDialog extends JDialog {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Features f = multivariateController.getSelectedFeatures().get(0);
-				
-				if(mutualDimCheckBox.isSelected()){
-					f.getFeatures().put(MultivariateFeatures.MUTUAL_DIM, true);
+				if(signalsLabelList.getModel().getSize() > 0 && signalsLabelList.getSelectedValues().length > 0){
+					Features f = multivariateController.getSelectedFeatures().get(0);
+					
+					if(mutualDimCheckBox.isSelected()){
+						f.getFeatures().put(MultivariateFeatures.MUTUAL_DIM, true);
+					}
+					if(crpCheckBox.isSelected()){
+						f.getFeatures().put(MultivariateFeatures.CROSS_RECURRENCE, true);
+						if(crpRateCheckBox.isSelected()){
+							f.getFeatures().put(MultivariateFeatures.CRP_RATE, true);
+						}
+						if(crpLamCheckBox.isSelected()){
+							f.getFeatures().put(MultivariateFeatures.CRP_LAM, true);
+						}
+						if(crpLMeanCheckBox.isSelected()){
+							f.getFeatures().put(MultivariateFeatures.CRP_LMEAN, true);
+						}
+						if(crpDetCheckBox.isSelected()){
+							f.getFeatures().put(MultivariateFeatures.CRP_DET, true);
+						}
+						if(crpShannonCheckBox.isSelected()){
+							f.getFeatures().put(MultivariateFeatures.CRP_SHANNON, true);
+						}
+					}
+					ArrayList<SelectedSignal[]> signalCombinations = new ArrayList<SelectedSignal[]>();						
+					for(int i = 0; i < signalsLabelList.getSelectedValues().length; i++){						
+						SelectedSignal[] signals = (SelectedSignal[])signalsLabelList.getSelectedValues()[i];
+						signalCombinations.add(signals);	
+					}
+					multivariateController.getSelectedFeatures().get(0).setSignals( signalCombinations);
+					setVisible(false);
 				}
-				if(crpCheckBox.isSelected()){
-					f.getFeatures().put(MultivariateFeatures.CROSS_RECURRENCE, true);
-					if(crpRateCheckBox.isSelected()){
-						f.getFeatures().put(MultivariateFeatures.CRP_RATE, true);
-					}
-					if(crpLamCheckBox.isSelected()){
-						f.getFeatures().put(MultivariateFeatures.CRP_LAM, true);
-					}
-					if(crpLMeanCheckBox.isSelected()){
-						f.getFeatures().put(MultivariateFeatures.CRP_LMEAN, true);
-					}
-					if(crpDetCheckBox.isSelected()){
-						f.getFeatures().put(MultivariateFeatures.CRP_DET, true);
-					}
-					if(crpShannonCheckBox.isSelected()){
-						f.getFeatures().put(MultivariateFeatures.CRP_SHANNON, true);
-					}
+				else{
+					JOptionPane.showMessageDialog(null, "At least one signal should be selected!", "Extraction error", JOptionPane.ERROR_MESSAGE);
 				}
 				
-				setVisible(false);
+			
 			}
 		});
 		buttonPanel.add(okButton);
@@ -436,4 +519,15 @@ public class NonlinearMultivariateFeaturesDialog extends JDialog {
 	public void setFinesseTextField(JTextField finesseTextField) {
 		this.finesseTextField = finesseTextField;
 	}
+	public void setSignalsLabelList(SelectedSignal[] signals) {
+		DefaultListModel signalsLabelModel = (DefaultListModel) this.signalsLabelList.getModel();
+		signalsLabelModel.clear();
+		ArrayList<SelectedSignal[]> signalIndicesCombinations = multivariateController.processSubsets(signals, 2);
+		
+		for(int i = 0; i < signalIndicesCombinations.size(); i++){
+			SelectedSignal[] s = signalIndicesCombinations.get(i);
+			signalsLabelModel.addElement(s);
+		}
+	}
+
 }
