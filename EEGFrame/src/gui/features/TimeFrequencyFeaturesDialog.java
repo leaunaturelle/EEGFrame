@@ -43,12 +43,12 @@ public class TimeFrequencyFeaturesDialog extends JDialog {
 	public TimeFrequencyFeaturesDialog(ExtractUnivariateFeaturesController univariateFeaturesController){
 		EEGFrameMain.checkOnEventDispatchThread();	
 		this.univariateFeaturesController = univariateFeaturesController;
-		this.setTitle ("Nonlinear other features");
+		this.setTitle ("Nonlinear time-frequency features");
 		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-		this.setPreferredSize(new Dimension(500,300));	
+		this.setPreferredSize(new Dimension(400,250));	
 		this.setLayout(new BorderLayout());
 		JPanel panel = addTimeFrequencyFeaturesPanel();
-		disableCheckBoxes();
+//		disableCheckBoxes();
 		this.add(panel, BorderLayout.CENTER);
 	    this.setResizable(false);
 	    this.setModal(true);
@@ -63,7 +63,7 @@ public class TimeFrequencyFeaturesDialog extends JDialog {
 		JPanel haarWaveletPanel = new JPanel();
 		haarWaveletPanel.setLayout(new BoxLayout(haarWaveletPanel, BoxLayout.X_AXIS));
 		JLabel haarWaveletLabel = new JLabel("Haar wavelet standard deviation:");
-		haarWaveletLabel.setPreferredSize(new Dimension(250, 20));
+		haarWaveletLabel.setPreferredSize(new Dimension(400, 20));
 		haarWaveletPanel.add(Box.createRigidArea(new Dimension(5,0)));
 		haarWaveletPanel.add(haarWaveletLabel);
 		haarWaveletPanel.add(Box.createHorizontalGlue());	
@@ -74,10 +74,10 @@ public class TimeFrequencyFeaturesDialog extends JDialog {
 			public void itemStateChanged(ItemEvent e) {
 				// TODO Auto-generated method stub
 				if(e.getStateChange() == ItemEvent.SELECTED){
-					enableCheckBoxes();
+//					enableCheckBoxes();
                 }
 				else{
-					disableCheckBoxes();
+//					disableCheckBoxes();
 				}
 			}
 		});
@@ -85,82 +85,83 @@ public class TimeFrequencyFeaturesDialog extends JDialog {
 		haarWaveletPanel.add(Box.createHorizontalGlue());
 		haarWaveletPanel.add(haarWaveletCheckBox);
 		haarWaveletPanel.add(Box.createHorizontalGlue());
-		
-		JPanel scalePanel = new JPanel();
-		scalePanel.setLayout(new BoxLayout(scalePanel, BoxLayout.Y_AXIS));
-		scalePanel.setBorder(BorderFactory.createTitledBorder("Scale: "));
-		panel.add(Box.createRigidArea(new Dimension(5,10)));
-		
-		JPanel scale3Panel = new JPanel();
-		scale3Panel.setLayout(new BoxLayout(scale3Panel, BoxLayout.X_AXIS));
-		JLabel scale3Label = new JLabel("Scale 3");
-		scale3Label.setHorizontalAlignment(JLabel.RIGHT);
-		scale3Label.setPreferredSize(new Dimension(100, 20));
-		scale3Panel.add(Box.createHorizontalGlue());
-		scale3Panel.add(scale3Label);
-		scale3Panel.add(Box.createHorizontalGlue());
-		scale3CheckBox = new JCheckBox();
-		scale3Panel.add(scale3CheckBox);
-		scale3Panel.add(Box.createHorizontalGlue());
-		scalePanel.add(scale3Panel);
-		
-		JPanel scale4Panel = new JPanel();
-		scale4Panel.setLayout(new BoxLayout(scale4Panel, BoxLayout.X_AXIS));
-		JLabel scale4Label = new JLabel("Scale 4");
-		scale4Label.setHorizontalAlignment(JLabel.RIGHT);
-		scale4Label.setPreferredSize(new Dimension(100, 20));
-		scale4Panel.add(Box.createHorizontalGlue());
-		scale4Panel.add(scale4Label);
-		scale4Panel.add(Box.createHorizontalGlue());
-		scale4CheckBox = new JCheckBox();
-		scale4Panel.add(scale4CheckBox);
-		scale4Panel.add(Box.createHorizontalGlue());
-		scalePanel.add(scale4Panel);
-		
-		JPanel scale8Panel = new JPanel();
-		scale8Panel.setLayout(new BoxLayout(scale8Panel, BoxLayout.X_AXIS));
-		JLabel scale8Label = new JLabel("Scale 8");
-		scale8Label.setHorizontalAlignment(JLabel.RIGHT);
-		scale8Label.setPreferredSize(new Dimension(100, 20));
-		scale8Panel.add(Box.createHorizontalGlue());
-		scale8Panel.add(scale8Label);
-		scale8Panel.add(Box.createHorizontalGlue());
-		scale8CheckBox = new JCheckBox();
-		scale8Panel.add(scale8CheckBox);
-		scale8Panel.add(Box.createHorizontalGlue());
-		scalePanel.add(scale8Panel);
-		
-		JPanel scale16Panel = new JPanel();
-		scale16Panel.setLayout(new BoxLayout(scale16Panel, BoxLayout.X_AXIS));
-		JLabel scale16Label = new JLabel("Scale 16");
-		scale16Label.setHorizontalAlignment(JLabel.RIGHT);
-		scale16Label.setPreferredSize(new Dimension(100, 20));
-		scale16Panel.add(Box.createHorizontalGlue());
-		scale16Panel.add(scale16Label);
-		scale16Panel.add(Box.createHorizontalGlue());
-		scale16CheckBox = new JCheckBox();
-		scale16Panel.add(scale16CheckBox);
-		scale16Panel.add(Box.createHorizontalGlue());
-		scalePanel.add(scale16Panel);
-		
-		JPanel scale32Panel = new JPanel();
-		scale32Panel.setLayout(new BoxLayout(scale32Panel, BoxLayout.X_AXIS));
-		JLabel scale32Label = new JLabel("Scale 32");
-		scale32Label.setHorizontalAlignment(JLabel.RIGHT);
-		scale32Label.setPreferredSize(new Dimension(100, 20));
-		scale32Panel.add(Box.createHorizontalGlue());
-		scale32Panel.add(scale32Label);
-		scale32Panel.add(Box.createHorizontalGlue());
-		scale32CheckBox = new JCheckBox();
-		scale32Panel.add(scale32CheckBox);
-		scale32Panel.add(Box.createHorizontalGlue());
-		scalePanel.add(scale32Panel);
-		
-		haarWaveletPanel.add(scalePanel);
-		haarWaveletPanel.add(Box.createHorizontalGlue());
 		panel.add(haarWaveletPanel);
 		panel.add(Box.createRigidArea(new Dimension(5,10)));
 		
+//		JPanel scalePanel = new JPanel();
+//		scalePanel.setLayout(new BoxLayout(scalePanel, BoxLayout.Y_AXIS));
+//		scalePanel.setBorder(BorderFactory.createTitledBorder("Scale: "));
+//		panel.add(Box.createRigidArea(new Dimension(5,10)));
+//		
+//		JPanel scale3Panel = new JPanel();
+//		scale3Panel.setLayout(new BoxLayout(scale3Panel, BoxLayout.X_AXIS));
+//		JLabel scale3Label = new JLabel("Scale 3");
+//		scale3Label.setHorizontalAlignment(JLabel.RIGHT);
+//		scale3Label.setPreferredSize(new Dimension(100, 20));
+//		scale3Panel.add(Box.createHorizontalGlue());
+//		scale3Panel.add(scale3Label);
+//		scale3Panel.add(Box.createHorizontalGlue());
+//		scale3CheckBox = new JCheckBox();
+//		scale3Panel.add(scale3CheckBox);
+//		scale3Panel.add(Box.createHorizontalGlue());
+//		scalePanel.add(scale3Panel);
+//		
+//		JPanel scale4Panel = new JPanel();
+//		scale4Panel.setLayout(new BoxLayout(scale4Panel, BoxLayout.X_AXIS));
+//		JLabel scale4Label = new JLabel("Scale 4");
+//		scale4Label.setHorizontalAlignment(JLabel.RIGHT);
+//		scale4Label.setPreferredSize(new Dimension(100, 20));
+//		scale4Panel.add(Box.createHorizontalGlue());
+//		scale4Panel.add(scale4Label);
+//		scale4Panel.add(Box.createHorizontalGlue());
+//		scale4CheckBox = new JCheckBox();
+//		scale4Panel.add(scale4CheckBox);
+//		scale4Panel.add(Box.createHorizontalGlue());
+//		scalePanel.add(scale4Panel);
+//		
+//		JPanel scale8Panel = new JPanel();
+//		scale8Panel.setLayout(new BoxLayout(scale8Panel, BoxLayout.X_AXIS));
+//		JLabel scale8Label = new JLabel("Scale 8");
+//		scale8Label.setHorizontalAlignment(JLabel.RIGHT);
+//		scale8Label.setPreferredSize(new Dimension(100, 20));
+//		scale8Panel.add(Box.createHorizontalGlue());
+//		scale8Panel.add(scale8Label);
+//		scale8Panel.add(Box.createHorizontalGlue());
+//		scale8CheckBox = new JCheckBox();
+//		scale8Panel.add(scale8CheckBox);
+//		scale8Panel.add(Box.createHorizontalGlue());
+//		scalePanel.add(scale8Panel);
+//		
+//		JPanel scale16Panel = new JPanel();
+//		scale16Panel.setLayout(new BoxLayout(scale16Panel, BoxLayout.X_AXIS));
+//		JLabel scale16Label = new JLabel("Scale 16");
+//		scale16Label.setHorizontalAlignment(JLabel.RIGHT);
+//		scale16Label.setPreferredSize(new Dimension(100, 20));
+//		scale16Panel.add(Box.createHorizontalGlue());
+//		scale16Panel.add(scale16Label);
+//		scale16Panel.add(Box.createHorizontalGlue());
+//		scale16CheckBox = new JCheckBox();
+//		scale16Panel.add(scale16CheckBox);
+//		scale16Panel.add(Box.createHorizontalGlue());
+//		scalePanel.add(scale16Panel);
+//		
+//		JPanel scale32Panel = new JPanel();
+//		scale32Panel.setLayout(new BoxLayout(scale32Panel, BoxLayout.X_AXIS));
+//		JLabel scale32Label = new JLabel("Scale 32");
+//		scale32Label.setHorizontalAlignment(JLabel.RIGHT);
+//		scale32Label.setPreferredSize(new Dimension(100, 20));
+//		scale32Panel.add(Box.createHorizontalGlue());
+//		scale32Panel.add(scale32Label);
+//		scale32Panel.add(Box.createHorizontalGlue());
+//		scale32CheckBox = new JCheckBox();
+//		scale32Panel.add(scale32CheckBox);
+//		scale32Panel.add(Box.createHorizontalGlue());
+//		scalePanel.add(scale32Panel);
+//		
+//		haarWaveletPanel.add(scalePanel);
+//		haarWaveletPanel.add(Box.createHorizontalGlue());
+
+//		
 		JPanel hilbertHuangPanel = new JPanel();
 		hilbertHuangPanel.setLayout(new BoxLayout(hilbertHuangPanel, BoxLayout.X_AXIS));
 		JLabel hilbertHuangLabel = new JLabel("Hilbert-Huang transform");
@@ -206,11 +207,11 @@ public class TimeFrequencyFeaturesDialog extends JDialog {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				haarWaveletCheckBox.setSelected(false);
-				scale3CheckBox.setSelected(false);
-				scale4CheckBox.setSelected(false);
-				scale8CheckBox.setSelected(false);
-				scale16CheckBox.setSelected(false);
-				scale32CheckBox.setSelected(false);
+//				scale3CheckBox.setSelected(false);
+//				scale4CheckBox.setSelected(false);
+//				scale8CheckBox.setSelected(false);
+//				scale16CheckBox.setSelected(false);
+//				scale32CheckBox.setSelected(false);
 				hilbertHuangCheckBox.setSelected(false); 
 				
 			}
@@ -240,18 +241,18 @@ public class TimeFrequencyFeaturesDialog extends JDialog {
 		return panel;
 	}
 	
-	public void disableCheckBoxes(){
-		scale3CheckBox.setEnabled(false);
-		scale4CheckBox.setEnabled(false);
-		scale8CheckBox.setEnabled(false);
-		scale16CheckBox.setEnabled(false);
-		scale32CheckBox.setEnabled(false);
-	}
-	public void enableCheckBoxes(){
-		scale3CheckBox.setEnabled(true);
-		scale4CheckBox.setEnabled(true);
-		scale8CheckBox.setEnabled(true);
-		scale16CheckBox.setEnabled(true);
-		scale32CheckBox.setEnabled(true);
-	}
+//	public void disableCheckBoxes(){
+//		scale3CheckBox.setEnabled(false);
+//		scale4CheckBox.setEnabled(false);
+//		scale8CheckBox.setEnabled(false);
+//		scale16CheckBox.setEnabled(false);
+//		scale32CheckBox.setEnabled(false);
+//	}
+//	public void enableCheckBoxes(){
+//		scale3CheckBox.setEnabled(true);
+//		scale4CheckBox.setEnabled(true);
+//		scale8CheckBox.setEnabled(true);
+//		scale16CheckBox.setEnabled(true);
+//		scale32CheckBox.setEnabled(true);
+//	}
 }

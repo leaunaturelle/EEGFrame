@@ -58,6 +58,7 @@ public class UnivariateFeatures extends Features {
 		features.put(LEMPEL_ZIV, false);
 		features.put(ALLAN_FACTOR, false);
 		features.put(NONLINEAR_FORECASTING, false);
+		features.put(HAAR_WAVELET, false);
 		
 		createOptionsToPrint();
 		createOptionsToPrintNoParams();
@@ -114,6 +115,7 @@ public class UnivariateFeatures extends Features {
 		optionsToPrint.add(NONLINEAR_FORECASTING);
 		optionsToPrint.add(FFT_WINDOW);
 		optionsToPrint.add(FFT);
+		optionsToPrint.add(HAAR_WAVELET);
 	}
 	
 	public void createOptionsToPrintNoParams(){
@@ -138,6 +140,7 @@ public class UnivariateFeatures extends Features {
 		optionsToPrintNoParams.add(SD1_SD2);
 		optionsToPrintNoParams.add(CORRELATION_DIM);
 		optionsToPrintNoParams.add(LLE);
+		optionsToPrintNoParams.add(HAAR_WAVELET);
 		optionsToPrintNoParams.add(ALPHA_PSD);
 		optionsToPrintNoParams.add(BETA_PSD);
 		optionsToPrintNoParams.add(GAMMA_PSD);

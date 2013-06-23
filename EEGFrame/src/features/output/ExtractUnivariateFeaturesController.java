@@ -30,6 +30,7 @@ import features.nonlinear.phaseSpace.LyapunovExponent;
 import features.nonlinear.phaseSpace.RecurrencePlot;
 import features.nonlinear.phaseSpace.SpatialFillingIndex;
 import features.nonlinear.phaseSpace.StandardDeviationRatio;
+import features.timeFrequency.HaarWaveletStandardDeviation;
 import gui.SelectedSignal;
 import gui.features.ExtractUnivariateFeaturesWindow;
 
@@ -354,6 +355,11 @@ public class ExtractUnivariateFeaturesController extends ExtractFeaturesControll
 //			double renyi = RenyiEntropy.calculateRenyiEntropy(series, renOrder);
 //			map[i].put("Renyi entropy", Double.toString(renyi));
 //			map[i].put("Renyi entropy order", Integer.toString(renOrder));
+		}
+		
+		if(selectedFeatures.getFeatures().get(UnivariateFeatures.HAAR_WAVELET)){
+			double stdHaar = HaarWaveletStandardDeviation.calculateHaarWaveletSTDEV(series);
+			selectedFeatures.getExtractedFeatures()[i].put(UnivariateFeatures.HAAR_WAVELET, Double.toString(stdHaar));
 		}
 		if (selectedFeatures.getFeatures().get(UnivariateFeatures.FFT)){
 			SpectralAnalysis spectAnalysis = new SpectralAnalysis(series, file.calculateFrequency(signal.getSignalIndex()));
