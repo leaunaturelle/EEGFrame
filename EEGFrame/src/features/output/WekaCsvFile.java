@@ -69,7 +69,10 @@ public class WekaCsvFile extends OutputFile {
 						optionsToPrintBuilder.append("_");
 					}
 					optionsToPrintBuilder.append(features.get(0).getOptionsToPrintNoParams().get(features.get(0).getOptionsToPrintNoParams().size()-1));
-					
+					if(features.get(0).isClassSelected){
+						optionsToPrintBuilder.append(", ");
+						optionsToPrintBuilder.append("Class ");
+					}
 					out.write(optionsToPrintBuilder.toString());
 				}
 				
@@ -107,7 +110,11 @@ public class WekaCsvFile extends OutputFile {
 						|| (features.get(index).getSignals().get(lastSignalIndex).length > 1 && MultivariateFeatures.MULTIVARIATE_SET.contains(features.get(index).getOptionsToPrintNoParams().get(lastOptionIndex )))){
 //					System.out.println("evo me u "+index +" intervalu, opcija je "+features.get(index).getOptionsToPrintNoParams().get(lastOptionIndex));
 					
-					extractedFeaturesBuilder.append(features.get(index).getExtractedFeatures()[lastSignalIndex].get(features.get(index).getOptionsToPrintNoParams().get((lastOptionIndex))));				
+					extractedFeaturesBuilder.append(features.get(index).getExtractedFeatures()[lastSignalIndex].get(features.get(index).getOptionsToPrintNoParams().get((lastOptionIndex))));		
+					if(features.get(0).isClassSelected){
+						extractedFeaturesBuilder.append(", ");
+						extractedFeaturesBuilder.append(features.get(0).classLabel);
+					}
 				}
 //				
 				out.write(extractedFeaturesBuilder.toString());				

@@ -39,9 +39,9 @@ public class WekaCsvDialog extends JDialog {
 	private static final long serialVersionUID = -3675121460405855036L;
 
 	private ExtractUnivariateFeaturesController univariateFeaturesController;
-	private JCheckBox wekaCheckBox, movingWindowCheckBox, removeUnknownCheckBox, multivariateCheckBox;
+	private JCheckBox wekaCheckBox, movingWindowCheckBox, removeUnknownCheckBox, multivariateCheckBox, classCheckBox;
 	private JButton selectMultivariateButton;
-	private JTextField movingWindowSizeTextField;
+	private JTextField movingWindowSizeTextField, classTextField;
 	private JSpinner percentageSpinner;
 	
 	public WekaCsvDialog(ExtractUnivariateFeaturesController univariateFeaturesController){
@@ -73,11 +73,13 @@ public class WekaCsvDialog extends JDialog {
 					removeUnknownCheckBox.setEnabled(true);
 					movingWindowCheckBox.setEnabled(true);
 					multivariateCheckBox.setEnabled(true);
+					classCheckBox.setEnabled(true);
 				}	
 				else{
 					removeUnknownCheckBox.setEnabled(false);
 					movingWindowCheckBox.setEnabled(false);
 					multivariateCheckBox.setEnabled(false);
+					classCheckBox.setEnabled(false);
 				}
 			}
 		});		
@@ -160,6 +162,41 @@ public class WekaCsvDialog extends JDialog {
 		panel.add(movingWindowOverlapPercentPanel);
 		panel.add(Box.createRigidArea(new Dimension(5,10)));
 		
+		JPanel classPanel = new JPanel();
+		classPanel.setLayout(new BoxLayout(classPanel, BoxLayout.X_AXIS));
+		classPanel.add(Box.createRigidArea(new Dimension(5,0)));
+		classCheckBox = new JCheckBox("Add class label");
+		classCheckBox.setEnabled(false);
+		classCheckBox.addItemListener(new ItemListener(){
+            
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				// TODO Auto-generated method stub
+				if(e.getStateChange() == ItemEvent.SELECTED){
+					classTextField.setEnabled(true);
+                }
+				else{
+					classTextField.setEnabled(false);
+				}
+			}
+		});
+//		classPanel.add(Box.createHorizontalGlue());
+		classPanel.add(classCheckBox);
+		classPanel.add(Box.createHorizontalGlue());
+		JLabel orderLabel = new JLabel("Class label: ");
+		orderLabel.setHorizontalAlignment(JLabel.RIGHT);
+//		orderLabel.setPreferredSize(new Dimension(100, 20));
+		classPanel.add(orderLabel);
+		classPanel.add(Box.createHorizontalGlue());
+		classTextField = new JTextField("0");
+		classTextField.setEnabled(false);
+		classTextField.setPreferredSize(new Dimension(50,20));
+		classTextField.setMaximumSize(new Dimension(50,20));
+		classPanel.add(classTextField);
+		classPanel.add(Box.createHorizontalGlue());
+		panel.add(classPanel);
+		panel.add(Box.createRigidArea(new Dimension(5,10)));
+		
 		JPanel multivariatePanel = new JPanel();
 		multivariatePanel.setLayout(new BoxLayout(multivariatePanel, BoxLayout.X_AXIS));
 		multivariatePanel.add(Box.createRigidArea(new Dimension(5,0)));
@@ -193,7 +230,6 @@ public class WekaCsvDialog extends JDialog {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				univariateFeaturesController.getExtractMixedFeaturesController().getExtractMultivariateFeaturesController().getExtractMultivariateFeaturesWindow().showNonlinearMultivariateFeaturesDialog();
-				
 			}
 		});
 		selectMultivariatePanel.add(selectMultivariateButton);
@@ -217,6 +253,7 @@ public class WekaCsvDialog extends JDialog {
 				movingWindowCheckBox.setSelected(true);
 				removeUnknownCheckBox.setSelected(true);
 				multivariateCheckBox.setSelected(true);
+				classCheckBox.setSelected(true);
 			}
 		});
 		buttonPanel.add(selectAllButton);
@@ -230,6 +267,7 @@ public class WekaCsvDialog extends JDialog {
 				movingWindowCheckBox.setSelected(false);
 				removeUnknownCheckBox.setSelected(false);
 				multivariateCheckBox.setSelected(false);
+				classCheckBox.setSelected(false);
 				
 			}
 		});
@@ -238,8 +276,13 @@ public class WekaCsvDialog extends JDialog {
 		JButton okButton = new JButton("OK");
 		okButton.addActionListener(new ActionListener() {
 			
+			
 			@Override
-			public void actionPerformed(ActionEvent e) {				
+			public void actionPerformed(ActionEvent e) {		
+				if(classCheckBox.isSelected()){
+					univariateFeaturesController.getSelectedFeatures().get(0).setClassSelected(true);
+					univariateFeaturesController.getSelectedFeatures().get(0).setClassLabel(classTextField.getText());
+				}
 				setVisible(false);
 			}
 		});

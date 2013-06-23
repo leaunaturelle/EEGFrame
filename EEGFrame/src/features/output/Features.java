@@ -21,6 +21,24 @@ public abstract class Features {
 	protected ArrayList<String> optionsToPrint;
 	protected ArrayList<String> optionsToPrintNoParams;
 	protected HashMap<String, Boolean> features = new HashMap<String, Boolean>();
+	protected boolean isClassSelected;
+	public boolean isClassSelected() {
+		return isClassSelected;
+	}
+
+	public void setClassSelected(boolean isClassSelected) {
+		this.isClassSelected = isClassSelected;
+	}
+
+	public String getClassLabel() {
+		return classLabel;
+	}
+
+	public void setClassLabel(String classLabel) {
+		this.classLabel = classLabel;
+	}
+
+	protected String classLabel;
 //	protected HashMap<String, Boolean> featuresNoParams = new HashMap<String, Boolean>();
 	public ArrayList<String> getOptionsToPrintNoParams() {
 		return optionsToPrintNoParams;
