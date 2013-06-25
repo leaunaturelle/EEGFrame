@@ -98,7 +98,7 @@ public class WekaCsvFile extends OutputFile {
 				for(int j = 0; j < features.get(index).getOptionsToPrintNoParams().size()-1; j++){
 					if((features.get(index).getSignals().get(lastSignalIndex).length == 1 && !MultivariateFeatures.MULTIVARIATE_SET.contains(features.get(index).getOptionsToPrintNoParams().get(j))) 
 							|| (features.get(index).getSignals().get(lastSignalIndex).length > 1 && MultivariateFeatures.MULTIVARIATE_SET.contains(features.get(index).getOptionsToPrintNoParams().get(j)))){
-						System.out.println("evo me u "+index +" intervalu, opcija je "+features.get(index).getOptionsToPrintNoParams().get(j));
+//						System.out.println("evo me u "+index +" intervalu, opcija je "+features.get(index).getOptionsToPrintNoParams().get(j));
 						extractedFeaturesBuilder.append(features.get(index).getExtractedFeatures()[lastSignalIndex].get(features.get(index).getOptionsToPrintNoParams().get(j)));
 						extractedFeaturesBuilder.append(", ");
 					}	

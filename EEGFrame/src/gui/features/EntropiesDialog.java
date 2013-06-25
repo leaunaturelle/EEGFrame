@@ -39,9 +39,23 @@ public class EntropiesDialog extends JDialog {
 	
 	private JTextField ccShannonTextField;
 	
-	private JTextField renyiTextField;
-	private JTextField apEnTextField;
-	private JTextField sampEnTextField;
+	private JTextField renyiTextField, apEnTextField, sampEnTextField, rApEnTextField, rSampEnTextField;
+	public JTextField getrApEnTextField() {
+		return rApEnTextField;
+	}
+
+	public void setrApEnTextField(JTextField rApEnTextField) {
+		this.rApEnTextField = rApEnTextField;
+	}
+
+	public JTextField getrSampEnTextField() {
+		return rSampEnTextField;
+	}
+
+	public void setrSampEnTextField(JTextField rSampEnTextField) {
+		this.rSampEnTextField = rSampEnTextField;
+	}
+
 	private ExtractUnivariateFeaturesController univariateController;
 	
 	JCheckBox ccShannonCheckBox, renyiCheckBox, apEnCheckBox, maxApEnCheckBox, maxSampEnCheckBox, sampEnCheckBox;
@@ -51,7 +65,7 @@ public class EntropiesDialog extends JDialog {
 		this.univariateController = univariateController;
 		this.setTitle ("Entropies");
 		this.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
-		this.setPreferredSize(new Dimension(500,300));	
+		this.setPreferredSize(new Dimension(500,350));	
 		this.setLayout(new BorderLayout());
 		JPanel panel = addEntropiesPanel();
 		this.add(panel, BorderLayout.CENTER);
@@ -157,10 +171,13 @@ public class EntropiesDialog extends JDialog {
 				if(e.getStateChange() == ItemEvent.SELECTED){
 					apEnTextField.setEnabled(true);
 					maxApEnCheckBox.setEnabled(true);
+					rApEnTextField.setEnabled(true);
+					
                 }
 				else{
 					apEnTextField.setEnabled(false);
 					maxApEnCheckBox.setEnabled(false);
+					rApEnTextField.setEnabled(false);
 				}
 			}
 		});
@@ -180,6 +197,23 @@ public class EntropiesDialog extends JDialog {
 		apEnPanel.add(apEnTextField);
 		apEnPanel.add(Box.createHorizontalGlue());
 		panel.add(apEnPanel);
+//		panel.add(Box.createRigidArea(new Dimension(5,5)));
+		
+		JPanel rApEnPanel = new JPanel();
+		rApEnPanel.setLayout(new BoxLayout(rApEnPanel, BoxLayout.X_AXIS));
+		JLabel rApEnLabel = new JLabel("r (times std dev), comma separated: ");
+		rApEnLabel.setPreferredSize(new Dimension(300, 20));		
+		rApEnPanel.add(Box.createRigidArea(new Dimension(80,0)));
+		rApEnPanel.add(rApEnLabel);
+		rApEnPanel.add(Box.createHorizontalGlue());
+		rApEnTextField = new JTextField("0.1");
+		rApEnTextField.setEnabled(false);
+		rApEnTextField.setPreferredSize(new Dimension(50,20));
+		rApEnTextField.setMaximumSize(new Dimension(50,20));
+		rApEnPanel.add(rApEnTextField);
+		rApEnPanel.add(new JLabel(" x SD "));
+//		rApEnPanel.add(Box.createHorizontalGlue());
+		panel.add(rApEnPanel);
 		panel.add(Box.createRigidArea(new Dimension(5,10)));
 		
 		JPanel maxApEnPanel = new JPanel();
@@ -200,7 +234,7 @@ public class EntropiesDialog extends JDialog {
 		JPanel sampEnPanel = new JPanel();
 		sampEnPanel.setLayout(new BoxLayout(sampEnPanel, BoxLayout.X_AXIS));
 		JLabel sampEnLabel = new JLabel("Sample entropy (SampEn)");
-		sampEnLabel.setPreferredSize(new Dimension(250, 20));
+		sampEnLabel.setPreferredSize(new Dimension(350, 20));
 		sampEnPanel.add(Box.createRigidArea(new Dimension(5,0)));
 		sampEnPanel.add(sampEnLabel);
 		sampEnPanel.add(Box.createHorizontalGlue());	
@@ -213,10 +247,12 @@ public class EntropiesDialog extends JDialog {
 				if(e.getStateChange() == ItemEvent.SELECTED){
 					sampEnTextField.setEnabled(true);
 					maxSampEnCheckBox.setEnabled(true);
+					rSampEnTextField.setEnabled(true);
                 }
 				else{
 					sampEnTextField.setEnabled(false);
 					maxSampEnCheckBox.setEnabled(false);
+					rSampEnTextField.setEnabled(false);
 				}
 			}
 		});
@@ -236,6 +272,23 @@ public class EntropiesDialog extends JDialog {
 		sampEnPanel.add(sampEnTextField);
 		sampEnPanel.add(Box.createHorizontalGlue());
 		panel.add(sampEnPanel);
+//		panel.add(Box.createRigidArea(new Dimension(5,10)));
+		
+		JPanel rSampEnPanel = new JPanel();
+		rSampEnPanel.setLayout(new BoxLayout(rSampEnPanel, BoxLayout.X_AXIS));
+		JLabel rSampEnLabel = new JLabel("r (times std dev), comma separated: ");
+		rSampEnLabel.setPreferredSize(new Dimension(300, 20));		
+		rSampEnPanel.add(Box.createRigidArea(new Dimension(80,0)));
+		rSampEnPanel.add(rSampEnLabel);
+		rSampEnPanel.add(Box.createHorizontalGlue());
+		rSampEnTextField = new JTextField("0.1");
+		rSampEnTextField.setEnabled(false);
+		rSampEnTextField.setPreferredSize(new Dimension(50,20));
+		rSampEnTextField.setMaximumSize(new Dimension(50,20));
+		rSampEnPanel.add(rSampEnTextField);
+		rSampEnPanel.add(new JLabel(" x SD "));
+//		rSampEnPanel.add(Box.createHorizontalGlue());
+		panel.add(rSampEnPanel);
 		panel.add(Box.createRigidArea(new Dimension(5,10)));
 		
 		JPanel maxSampEnPanel = new JPanel();

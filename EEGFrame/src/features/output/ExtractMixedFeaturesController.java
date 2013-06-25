@@ -26,6 +26,7 @@ public class ExtractMixedFeaturesController extends ExtractFeaturesController {
 	}
 	@Override
 	public void extractFeatures() {
+		
 		extractUnivariateFeaturesController.extractFeatures();
 		selectedFeatures = extractUnivariateFeaturesController.getSelectedFeatures();
 		extractMultivariateFeaturesController.extractFeatures();

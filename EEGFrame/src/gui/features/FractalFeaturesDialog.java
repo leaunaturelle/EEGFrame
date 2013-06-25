@@ -101,7 +101,7 @@ public class FractalFeaturesDialog extends JDialog {
 		
 		JPanel higuchiPanel = new JPanel();
 		higuchiPanel.setLayout(new BoxLayout(higuchiPanel, BoxLayout.X_AXIS));
-		JLabel higuchiLabel = new JLabel("Higuchi entropy");
+		JLabel higuchiLabel = new JLabel("Higuchi's fractal dimension");
 		higuchiLabel.setPreferredSize(new Dimension(250, 20));
 		higuchiPanel.add(Box.createRigidArea(new Dimension(5,0)));
 		higuchiPanel.add(higuchiLabel);

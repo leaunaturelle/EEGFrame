@@ -149,9 +149,11 @@ public class ExtractUnivariateFeaturesController extends ExtractFeaturesControll
 		for(int i = 0; i < f.size(); i++){
 			UnivariateFeatures univariateFeatures = (UnivariateFeatures) f.get(i);
 //			System.out.println("velicina options to print za " + i +" je "+ univariateFeatures.getOptionsToPrintNoParams().size());
+			@SuppressWarnings("rawtypes")
 			Iterator featuresIt = univariateFeatures.getFeatures().entrySet().iterator();
 		    while (featuresIt.hasNext()) {
-		        Map.Entry pairs = (Map.Entry)featuresIt.next();
+		        @SuppressWarnings("rawtypes")
+				Map.Entry pairs = (Map.Entry)featuresIt.next();
 		        if((Boolean) pairs.getValue() == false){
 		        	univariateFeatures.getOptionsToPrint().remove(pairs.getKey());
 		        	univariateFeatures.getOptionsToPrintNoParams().remove(pairs.getKey());
@@ -334,9 +336,23 @@ public class ExtractUnivariateFeaturesController extends ExtractFeaturesControll
 		
 		if(selectedFeatures.getFeatures().get(UnivariateFeatures.AP_EN)){
 			int mAp = (int) Double.parseDouble(extractUnivariateFeaturesWindow.getEntropiesDialog().getApEnTextField().getText());
-			double resApEn = ApEn.calculateApEn(series, mAp, 0.15*Statistics.standardDeviation(series));
-			selectedFeatures.getExtractedFeatures()[i].put(UnivariateFeatures.AP_EN, Double.toString(resApEn));
-			selectedFeatures.getExtractedFeatures()[i].put(UnivariateFeatures.AP_EN_M_FACTOR, Integer.toString(mAp));
+			String rAp = extractUnivariateFeaturesWindow.getEntropiesDialog().getrApEnTextField().getText();
+			String[] rValues = rAp.split(",");
+			for(int j = 0; j < rValues.length; j++){
+				double resApEn = ApEn.calculateApEn(series, mAp, Double.parseDouble(rValues[j].trim())*Statistics.standardDeviation(series));
+				selectedFeatures.getExtractedFeatures()[i].put(UnivariateFeatures.AP_EN+"_"+rValues[j].trim(), Double.toString(resApEn));
+				selectedFeatures.getExtractedFeatures()[i].put(UnivariateFeatures.AP_EN_M_FACTOR, Integer.toString(mAp));
+				if(i == 0){		
+					selectedFeatures.getOptionsToPrint().add(UnivariateFeatures.AP_EN+"_"+rValues[j].trim());
+					selectedFeatures.getOptionsToPrintNoParams().add(UnivariateFeatures.AP_EN+"_"+rValues[j].trim());
+					selectedFeatures.getOptionsToPrint().remove(UnivariateFeatures.AP_EN);
+					selectedFeatures.getOptionsToPrintNoParams().remove(UnivariateFeatures.AP_EN);
+				
+				}
+//				for(int t = 0; t < selectedFeatures.getOptionsToPrintNoParams().size(); t++){
+//					System.out.println(selectedFeatures.getOptionsToPrintNoParams().get(t));	
+//				}
+			}
 			
 //			if(features.map.get(UnivariateFeatures.MAX_AP_EN)){
 //				double maxApEn = ApEn.calculateMaxApEn(series, mAp);
@@ -346,9 +362,21 @@ public class ExtractUnivariateFeaturesController extends ExtractFeaturesControll
 		
 		if(selectedFeatures.getFeatures().get(UnivariateFeatures.SAMP_EN)){
 			int mSamp = (int) Double.parseDouble(extractUnivariateFeaturesWindow.getEntropiesDialog().getSampEnTextField().getText());
-			double resSampEn = SampEn.calculateSampEn(series, mSamp, 0.15*Statistics.standardDeviation(series));
-			selectedFeatures.getExtractedFeatures()[i].put("Sample entropy", Double.toString(resSampEn));
-			selectedFeatures.getExtractedFeatures()[i].put("Sample entropy m factor", Integer.toString(mSamp));
+			
+			String rSamp = extractUnivariateFeaturesWindow.getEntropiesDialog().getrSampEnTextField().getText();
+			String[] rValues = rSamp.split(",");
+			for(int j = 0; j < rValues.length; j++){
+				double resSampEn =  SampEn.calculateSampEn(series, mSamp, Double.parseDouble(rValues[j].trim())*Statistics.standardDeviation(series));
+				selectedFeatures.getExtractedFeatures()[i].put(UnivariateFeatures.SAMP_EN+"_"+rValues[j].trim(), Double.toString( resSampEn));
+				selectedFeatures.getExtractedFeatures()[i].put(UnivariateFeatures.SAMP_EN_M_FACTOR, Integer.toString(mSamp));
+				if(i == 0){
+					selectedFeatures.getOptionsToPrint().add(UnivariateFeatures.SAMP_EN+"_"+rValues[j].trim());
+					selectedFeatures.getOptionsToPrintNoParams().add(UnivariateFeatures.SAMP_EN+"_"+rValues[j].trim());
+					selectedFeatures.getOptionsToPrint().remove(UnivariateFeatures.SAMP_EN);
+					selectedFeatures.getOptionsToPrintNoParams().remove(UnivariateFeatures.SAMP_EN);
+				}						
+			}
+			
 //			if(features.map.get("Maximum sample entropy")){
 //				features.maxSampEn = SampEn.calculateMaxSampEn(series, features.mSamp);
 //				map.put("Maximum sample entropy", Double.toString(features.maxSampEn[0]));
