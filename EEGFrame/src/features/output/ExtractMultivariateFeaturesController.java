@@ -72,8 +72,8 @@ public class ExtractMultivariateFeaturesController extends
 
 		for(int featuresInterval = 0; featuresInterval < selectedFeatures.size(); featuresInterval++){
 			features = (MultivariateFeatures) selectedFeatures.get(featuresInterval);
-			System.out.println("Interval broj " + featuresInterval);
-			System.out.println("interval je " + features.getTimeInterval().get(0)[0] + "- " + features.getTimeInterval().get(0)[1]);
+//			System.out.println("Interval broj " + featuresInterval);
+//			System.out.println("interval je " + features.getTimeInterval().get(0)[0] + "- " + features.getTimeInterval().get(0)[1]);
 			InputFile file;
 			SelectedSignal signal;
 			Long[] samples = new Long[2];
@@ -144,7 +144,7 @@ public class ExtractMultivariateFeaturesController extends
 					file = signal.getFile();	
 					int startSample = (int)samples[0].longValue();
 					int endSample = (int)samples[1].longValue();
-					System.out.println("izracunati start sample je "+ startSample + " a end sample "+endSample);
+//					System.out.println("izracunati start sample je "+ startSample + " a end sample "+endSample);
 					signalCombination[j] = file.getSamplesFromInterval(signal.getSignalIndex(), startSample, endSample);
 				}
 				signalList.add(signalCombination);
@@ -165,7 +165,7 @@ public class ExtractMultivariateFeaturesController extends
 
 			int finesse = Integer.parseInt(extractMultivariateFeaturesWindow.getNonlinearMultivariateFeaturesDialog().getFinesseTextField().getText());
 			double mutualDim = MutualDimension.calculateMutualDimension(series[0], series[1], phaseSpaceDim1, phaseSpaceDim2, phaseSpaceLag1, phaseSpaceLag2, finesse);
-			System.out.println("mutual dim je " + mutualDim + "skup signala u trenutnom intervalu " + i);
+//			System.out.println("mutual dim je " + mutualDim + "skup signala u trenutnom intervalu " + i);
 			selectedFeatures.getExtractedFeatures()[i].put(MultivariateFeatures.MUTUAL_DIM, Double.toString(mutualDim));
 		}
 		if(selectedFeatures.getFeatures().get(MultivariateFeatures.CROSS_RECURRENCE)){
@@ -210,7 +210,7 @@ public class ExtractMultivariateFeaturesController extends
 		ArrayList<Features> f = getSelectedFeatures();
 		for(int i = 0; i < f.size(); i++){
 			MultivariateFeatures multivariateFeatures = (MultivariateFeatures) f.get(i);
-			System.out.println("velicina options to print za " + i +" je "+ multivariateFeatures.getOptionsToPrintNoParams().size());
+//			System.out.println("velicina options to print za " + i +" je "+ multivariateFeatures.getOptionsToPrintNoParams().size());
 			Iterator featuresIt = multivariateFeatures.getFeatures().entrySet().iterator();
 		    while (featuresIt.hasNext()) {
 		        Map.Entry pairs = (Map.Entry)featuresIt.next();
@@ -221,7 +221,7 @@ public class ExtractMultivariateFeaturesController extends
 		        }	
 
 		    }
-        	System.out.println("velicina options to print za " + i +" je "+ multivariateFeatures.getOptionsToPrintNoParams().size());
+//        	System.out.println("velicina options to print za " + i +" je "+ multivariateFeatures.getOptionsToPrintNoParams().size());
 		}	
 	}
 

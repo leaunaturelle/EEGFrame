@@ -85,7 +85,7 @@ public class DFA {
 				alphaL = Statistics.fitLineThroughXYPointsCoefficients(ns, temp, 0)[0];
 			}
 		}
-		// calculate alphaS - KLASIÈAN
+		// calculate alphaS - KLASICAN
 		ns = new double[boundForAlphaLongCalculation-2];
 		for (i=0; i<boundForAlphaLongCalculation-2; i++){
 			ns[i] = Math.log10((double)(i+2));

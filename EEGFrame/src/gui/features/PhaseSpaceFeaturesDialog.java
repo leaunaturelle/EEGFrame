@@ -376,7 +376,7 @@ public class PhaseSpaceFeaturesDialog extends JDialog {
 					f.getFeatures().put(UnivariateFeatures.SD1_SD2, true);
 				}
 				if(ctmCheckBox.isSelected()){
-					f.getFeatures().put(UnivariateFeatures.CTM, true);
+					f.getFeatures().put(UnivariateFeatures.CTM_PHASE_SPACE, true);
 				}
 				if(SFICheckBox.isSelected()){
 					f.getFeatures().put(UnivariateFeatures.SFI, true);

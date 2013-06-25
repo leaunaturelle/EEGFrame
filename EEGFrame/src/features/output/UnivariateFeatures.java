@@ -36,6 +36,7 @@ public class UnivariateFeatures extends Features {
 		features.put(HIGUCHI, false);
 		features.put(HURST, false);
 		features.put(SFI, false);
+		features.put(CTM_PHASE_SPACE, false);
 		features.put(SD1_SD2, false);
 		features.put(CORRELATION_DIM, false);
 		features.put(LLE, false);
@@ -58,6 +59,7 @@ public class UnivariateFeatures extends Features {
 		features.put(LEMPEL_ZIV, false);
 		features.put(ALLAN_FACTOR, false);
 		features.put(NONLINEAR_FORECASTING, false);
+		features.put(CTM, false);
 		features.put(HAAR_WAVELET, false);
 		
 		createOptionsToPrint();
@@ -95,6 +97,7 @@ public class UnivariateFeatures extends Features {
 		optionsToPrint.add(HIGUCHI);
 		optionsToPrint.add(HURST);
 		optionsToPrint.add(SFI);
+		optionsToPrint.add(CTM_PHASE_SPACE);
 		optionsToPrint.add(SD1_SD2);
 		optionsToPrint.add(CORRELATION_DIM);
 		optionsToPrint.add(LLE);
@@ -113,6 +116,7 @@ public class UnivariateFeatures extends Features {
 		optionsToPrint.add(LEMPEL_ZIV);
 		optionsToPrint.add(ALLAN_FACTOR);
 		optionsToPrint.add(NONLINEAR_FORECASTING);
+		optionsToPrint.add(CTM);
 		optionsToPrint.add(FFT_WINDOW);
 		optionsToPrint.add(FFT);
 		optionsToPrint.add(HAAR_WAVELET);
@@ -137,6 +141,7 @@ public class UnivariateFeatures extends Features {
 		optionsToPrintNoParams.add(HIGUCHI);
 		optionsToPrintNoParams.add(HURST);
 		optionsToPrintNoParams.add(SFI);
+		optionsToPrintNoParams.add(CTM_PHASE_SPACE);
 		optionsToPrintNoParams.add(SD1_SD2);
 		optionsToPrintNoParams.add(CORRELATION_DIM);
 		optionsToPrintNoParams.add(LLE);
@@ -156,6 +161,7 @@ public class UnivariateFeatures extends Features {
 		optionsToPrintNoParams.add(LEMPEL_ZIV);
 		optionsToPrintNoParams.add(ALLAN_FACTOR);
 		optionsToPrintNoParams.add(NONLINEAR_FORECASTING);
+		optionsToPrintNoParams.add(CTM);
 	}
 	
 	@Override
@@ -191,7 +197,7 @@ public class UnivariateFeatures extends Features {
 	public static final String HIGUCHI = "Higuchi";
 	public static final String HURST = "Hurst_exp";
 	public static final String SFI = "Spatial_filling_index" ;
-	public static final String CTM = "CTM"; 
+	public static final String CTM_PHASE_SPACE = "CTM_PHASE_SPACE"; 
 	public static final String SD1_SD2 = "SD1/SD2";
 	public static final String CORRELATION_DIM = "Correlation_dim";
 	public static final String LLE = "Largest_Lyapunov_exp";
@@ -211,6 +217,7 @@ public class UnivariateFeatures extends Features {
 	public static final String LEMPEL_ZIV = "Lempel_Ziv_complexity";
 	public static final String ALLAN_FACTOR = "Allan_factor";
 	public static final String NONLINEAR_FORECASTING = "Nonlinear_forecasting";
+	public static final String CTM = "CTM"; 
 	public static final String FFT = "FFT";
 	public static final String HANN = "HANN";
 	public static final String HAMMING = "HAMMING";

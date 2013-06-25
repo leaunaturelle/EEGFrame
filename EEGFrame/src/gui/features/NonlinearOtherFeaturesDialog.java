@@ -36,8 +36,14 @@ public class NonlinearOtherFeaturesDialog extends JDialog {
 	 * 
 	 */
 	private static final long serialVersionUID = -5340424357968825400L;
-	private JTextField allanFactorTextField;
-	private JCheckBox allanFactorCheckBox, lempelZivCheckBox, forecastingCheckBox;
+	private JTextField allanFactorTextField, ctmTextField;
+	public JTextField getCtmTextField() {
+		return ctmTextField;
+	}
+	public void setCtmTextField(JTextField ctmTextField) {
+		this.ctmTextField = ctmTextField;
+	}
+	private JCheckBox allanFactorCheckBox, lempelZivCheckBox, forecastingCheckBox, ctmCheckBox;
 	private ExtractUnivariateFeaturesController univariateController;
 
 	public NonlinearOtherFeaturesDialog(ExtractUnivariateFeaturesController univariateController){
@@ -45,7 +51,7 @@ public class NonlinearOtherFeaturesDialog extends JDialog {
 		this.univariateController = univariateController;		
 		this.setTitle ("Nonlinear other features");
 		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-		this.setPreferredSize(new Dimension(500,200));	
+		this.setPreferredSize(new Dimension(550,250));	
 		this.setLayout(new BorderLayout());
 		JPanel panel = addNonlinearOtherFeaturesPanel();
 		this.add(panel, BorderLayout.CENTER);
@@ -127,6 +133,46 @@ public class NonlinearOtherFeaturesDialog extends JDialog {
 		panel.add(forecastingPanel);
 		panel.add(Box.createRigidArea(new Dimension(5,10)));
 		
+		JPanel ctmPanel = new JPanel();
+		ctmPanel.setLayout(new BoxLayout(ctmPanel, BoxLayout.X_AXIS));
+		JLabel ctmLabel = new JLabel("CTM");
+		ctmLabel.setPreferredSize(new Dimension(250, 20));
+		ctmPanel.add(Box.createRigidArea(new Dimension(5,0)));
+		ctmPanel.add(ctmLabel);
+		ctmPanel.add(Box.createHorizontalGlue());	
+		ctmCheckBox = new JCheckBox();
+		ctmCheckBox.addItemListener(new ItemListener(){
+            
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				// TODO Auto-generated method stub
+				if(e.getStateChange() == ItemEvent.SELECTED){
+					ctmTextField.setEnabled(true);
+                }
+				else{
+					ctmTextField.setEnabled(false);
+				}
+			}
+		});
+
+		ctmPanel.add(Box.createHorizontalGlue());
+		ctmPanel.add(ctmCheckBox);
+		ctmPanel.add(Box.createHorizontalGlue());
+		JLabel radiusLabel = new JLabel("Radius (times std dev): ");
+		orderLabel.setHorizontalAlignment(JLabel.RIGHT);
+		orderLabel.setPreferredSize(new Dimension(100, 20));
+		ctmPanel.add(radiusLabel);
+		ctmPanel.add(Box.createHorizontalGlue());
+		ctmTextField = new JTextField("0.5");
+		ctmTextField.setEnabled(false);
+		ctmTextField.setPreferredSize(new Dimension(50,20));
+		ctmTextField.setMaximumSize(new Dimension(50,20));
+		ctmPanel.add(ctmTextField);
+		ctmPanel.add(new JLabel(" x SD"));
+		ctmPanel.add(Box.createHorizontalGlue());
+		panel.add(ctmPanel);
+		panel.add(Box.createRigidArea(new Dimension(5,10)));
+		
 		panel.add(new JSeparator());
 		panel.add(Box.createRigidArea(new Dimension(5,10)));
 		JPanel buttonPanel = new JPanel();
@@ -141,6 +187,7 @@ public class NonlinearOtherFeaturesDialog extends JDialog {
 				allanFactorCheckBox.setSelected(true);
 				lempelZivCheckBox.setSelected(true);
 				forecastingCheckBox.setSelected(true);
+				ctmCheckBox.setSelected(true);
 			}
 		});
 		buttonPanel.add(selectAllButton);
@@ -153,6 +200,7 @@ public class NonlinearOtherFeaturesDialog extends JDialog {
 				allanFactorCheckBox.setSelected(false);
 				lempelZivCheckBox.setSelected(false);
 				forecastingCheckBox.setSelected(false);
+				ctmCheckBox.setSelected(false);
 				
 			}
 		});
@@ -172,6 +220,9 @@ public class NonlinearOtherFeaturesDialog extends JDialog {
 				}
 				if(forecastingCheckBox.isSelected()){
 					f.getFeatures().put(UnivariateFeatures.NONLINEAR_FORECASTING, true);
+				}
+				if(ctmCheckBox.isSelected()){
+					f.getFeatures().put(UnivariateFeatures.CTM, true);
 				}
 				setVisible(false);
 			}

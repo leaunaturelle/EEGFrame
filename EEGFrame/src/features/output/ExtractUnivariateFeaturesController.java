@@ -25,6 +25,8 @@ import features.nonlinear.entropy.SampEn;
 import features.nonlinear.fractal.DFA;
 import features.nonlinear.fractal.HiguchiDimension;
 import features.nonlinear.fractal.HurstExponent;
+import features.nonlinear.other.CTMSecondOrderDifferencePlot;
+import features.nonlinear.phaseSpace.CTM;
 import features.nonlinear.phaseSpace.CorrelationDimension;
 import features.nonlinear.phaseSpace.LyapunovExponent;
 import features.nonlinear.phaseSpace.RecurrencePlot;
@@ -83,8 +85,8 @@ public class ExtractUnivariateFeaturesController extends ExtractFeaturesControll
 		}
 		for(int featuresInterval = 0; featuresInterval < selectedFeatures.size(); featuresInterval++){
 			features = (UnivariateFeatures) selectedFeatures.get(featuresInterval);
-			System.out.println("Interval broj " + featuresInterval);
-			System.out.println("interval je " + features.getTimeInterval().get(0)[0] + "- " + features.getTimeInterval().get(0)[1]);
+//			System.out.println("Interval broj " + featuresInterval);
+//			System.out.println("interval je " + features.getTimeInterval().get(0)[0] + "- " + features.getTimeInterval().get(0)[1]);
 			InputFile file;
 			SelectedSignal signal;
 			Long[] samples = new Long[2];
@@ -129,12 +131,12 @@ public class ExtractUnivariateFeaturesController extends ExtractFeaturesControll
 				}		
 				int startSample = (int)samples[0].longValue();
 				int endSample = (int)samples[1].longValue();
-				System.out.println("izracunati start sample je "+ startSample + " a end sample "+endSample);
+//				System.out.println("izracunati start sample je "+ startSample + " a end sample "+endSample);
 				double[] series = file.getSamplesFromInterval(signal.getSignalIndex(), startSample, endSample);
 				features.getExtractedFeatures()[i].put(UnivariateFeatures.FILE_LABEL, file.getName());
 				features.getExtractedFeatures()[i].put(UnivariateFeatures.SIGNAL_LABEL, signal.getSignalLabel());
 				
-				System.out.println("featuresInterval " + featuresInterval + "signal " + signal.getSignalLabel());
+//				System.out.println("featuresInterval " + featuresInterval + "signal " + signal.getSignalLabel());
 				calculateUnivariateFeatures(features, series, i, file, signal);
 
 			}
@@ -146,7 +148,7 @@ public class ExtractUnivariateFeaturesController extends ExtractFeaturesControll
 		ArrayList<Features> f = getSelectedFeatures();
 		for(int i = 0; i < f.size(); i++){
 			UnivariateFeatures univariateFeatures = (UnivariateFeatures) f.get(i);
-			System.out.println("velicina options to print za " + i +" je "+ univariateFeatures.getOptionsToPrintNoParams().size());
+//			System.out.println("velicina options to print za " + i +" je "+ univariateFeatures.getOptionsToPrintNoParams().size());
 			Iterator featuresIt = univariateFeatures.getFeatures().entrySet().iterator();
 		    while (featuresIt.hasNext()) {
 		        Map.Entry pairs = (Map.Entry)featuresIt.next();
@@ -157,7 +159,7 @@ public class ExtractUnivariateFeaturesController extends ExtractFeaturesControll
 		        }	
 
 		    }
-        	System.out.println("velicina options to print za " + i +" je "+ univariateFeatures.getOptionsToPrintNoParams().size());
+//        	System.out.println("velicina options to print za " + i +" je "+ univariateFeatures.getOptionsToPrintNoParams().size());
 		}
 	
 	}
@@ -165,7 +167,7 @@ public class ExtractUnivariateFeaturesController extends ExtractFeaturesControll
 	public void calculateUnivariateFeatures(Features selectedFeatures, double[] series, int i, InputFile file, SelectedSignal signal){
 		if(selectedFeatures.getFeatures().get(UnivariateFeatures.MEAN)){
 			double mean = Mean.calculateMean(series);
-			System.out.println("signal "+i+ "mean je " + mean);
+//			System.out.println("signal "+i+ "mean je " + mean);
 			selectedFeatures.getExtractedFeatures()[i].put(UnivariateFeatures.MEAN, Double.toString(mean));
 		}
 		if(selectedFeatures.getFeatures().get(UnivariateFeatures.STANDARD_DEVIATION)){
@@ -291,13 +293,25 @@ public class ExtractUnivariateFeaturesController extends ExtractFeaturesControll
 			double sdrRes = sdr.getSD1SD2Ratio();
 			selectedFeatures.getExtractedFeatures()[i].put(UnivariateFeatures.SD1_SD2, Double.toString(sdrRes));
 		}
+		if(selectedFeatures.getFeatures().get(UnivariateFeatures.CTM_PHASE_SPACE)){
+			int phaseSpaceDim = (int)Double.parseDouble(extractUnivariateFeaturesWindow.getPhaseSpaceFeaturesDialog().getPhaseSpaceDimensionTextField().getText());
+			int phaseSpaceLag = (int)Double.parseDouble(extractUnivariateFeaturesWindow.getPhaseSpaceFeaturesDialog().getPhaseSpaceLagsTextField().getText());
+			
+			double mind = Statistics.getDifferenceMinimumNthOrder(series, phaseSpaceLag, 0, series.length, false, Statistics.DESCENDING);
+			double maxd = Statistics.getDifferenceMaximumNthOrder(series, phaseSpaceLag, 0, series.length, false, Statistics.DESCENDING);
+			double r = (maxd-mind)/8;
+			double ctm = CTM.calculateCTM(series, r, phaseSpaceDim, phaseSpaceLag);
+			selectedFeatures.getExtractedFeatures()[i].put(UnivariateFeatures.CTM_PHASE_SPACE, Double.toString(ctm));
+		}
 		
 
 		if(selectedFeatures.getFeatures().get(UnivariateFeatures.DFA)){
-		//ZASAD SAMO SHORT
+		//ZASAD SAMO LONG
 			double dfaS = 0;
+			int minSegment = Integer.parseInt(extractUnivariateFeaturesWindow.getFractalFeaturesDialog().getMinSegmentLengthTextField().getText());
+			int alphaLongBound = Integer.parseInt(extractUnivariateFeaturesWindow.getFractalFeaturesDialog().getAlphaLongBoundTextField().getText());
 			try {
-				dfaS = DFA.calculateDFA(series, false, DFA.DEFAULT_MINIMAL_ANALYZED_SEGMENT_LENGTH, DFA.DEFAULT_BOUND_FOR_ALPHA_LONG_CALCULATION)[0];
+				dfaS = DFA.calculateDFA(series, true, minSegment, alphaLongBound)[0];
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -409,6 +423,11 @@ public class ExtractUnivariateFeaturesController extends ExtractFeaturesControll
 					selectedFeatures.getExtractedFeatures()[i].put(UnivariateFeatures.TOTAL_PSD, Double.toString(totalPsd));
 				}
 			}
+		}
+		if(selectedFeatures.getFeatures().get(UnivariateFeatures.CTM)){
+			double r = Double.parseDouble(extractUnivariateFeaturesWindow.getNonlinearOtherFeaturesDialog().getCtmTextField().getText());
+			double ctm = CTMSecondOrderDifferencePlot.calculateCTM(series, r*Statistics.standardDeviation(series));
+			selectedFeatures.getExtractedFeatures()[i].put(UnivariateFeatures.CTM, Double.toString(ctm));
 		}
 	}
 

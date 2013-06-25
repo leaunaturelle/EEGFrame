@@ -20,13 +20,11 @@ public class NonlinearForecasting {
 		double testSet [] = new double[size];
 		double xMatrix[][] = new double[size-(dimension-1)*lag][dimension], yMatrix[][] = new double[size-(dimension-1)*lag][dimension]; 
 		//double yFutureMatrix[][] = new double[segment.length-(dimension-1)*lag][dimension];
-		
-		
+
 		for(int i = 0; i < size; i++){
 			learningSet[i] = segment[i]; 
 			testSet[i] = segment[size+i];
 		}
-		
 		
 		//REKONSTRUKCIJA ATRAKTORA
 		for(int g = 0; g < size-(dimension-1)*lag; g++){
