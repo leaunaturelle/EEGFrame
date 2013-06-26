@@ -58,7 +58,7 @@ public class UnivariateFeatures extends Features {
 		features.put(REC_AVG_NEIGHBOURS_NUM, false);
 		features.put(LEMPEL_ZIV, false);
 		features.put(ALLAN_FACTOR, false);
-		features.put(NONLINEAR_FORECASTING, false);
+		features.put(NLPE, false);
 		features.put(CTM, false);
 		features.put(HAAR_WAVELET, false);
 		
@@ -115,7 +115,7 @@ public class UnivariateFeatures extends Features {
 		optionsToPrint.add(REC_AVG_NEIGHBOURS_NUM);
 		optionsToPrint.add(LEMPEL_ZIV);
 		optionsToPrint.add(ALLAN_FACTOR);
-		optionsToPrint.add(NONLINEAR_FORECASTING);
+		optionsToPrint.add(NLPE);
 		optionsToPrint.add(CTM);
 		optionsToPrint.add(FFT_WINDOW);
 		optionsToPrint.add(FFT);
@@ -160,7 +160,7 @@ public class UnivariateFeatures extends Features {
 		optionsToPrintNoParams.add(REC_AVG_NEIGHBOURS_NUM);
 		optionsToPrintNoParams.add(LEMPEL_ZIV);
 		optionsToPrintNoParams.add(ALLAN_FACTOR);
-		optionsToPrintNoParams.add(NONLINEAR_FORECASTING);
+		optionsToPrintNoParams.add(NLPE);
 		optionsToPrintNoParams.add(CTM);
 	}
 	
@@ -216,7 +216,7 @@ public class UnivariateFeatures extends Features {
 	public static final String REC_AVG_NEIGHBOURS_NUM = "Recurrence_AVG_neighbour_num";
 	public static final String LEMPEL_ZIV = "Lempel_Ziv_complexity";
 	public static final String ALLAN_FACTOR = "Allan_factor";
-	public static final String NONLINEAR_FORECASTING = "Nonlinear_forecasting";
+	public static final String NLPE = "Nonlinear_prediction_error";
 	public static final String CTM = "CTM"; 
 	public static final String FFT = "FFT";
 	public static final String HANN = "HANN";

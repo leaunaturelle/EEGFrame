@@ -38,17 +38,24 @@ public class PhaseSpaceFeaturesDialog extends JDialog {
 	private static final long serialVersionUID = -671721423422442966L;
 	
 	private ExtractUnivariateFeaturesController univariateFeaturesController;
-	private JTextField phaseSpaceDimensionTextField;
-	private JTextField phaseSpaceLagsTextField; 
-	private JTextField SFITextField; 
-	private JCheckBox standardDeviationRatioCheckBox, ctmCheckBox, SFICheckBox, lleCheckBox, d2CheckBox, recurrenceCheckBox, recLamCheckBox, recRateCheckBox, recNeighborsNumCheckBox,recLMeanCheckBox, recDetCheckBox, recShannonCheckBox;   
+	private JTextField phaseSpaceDimensionTextField, phaseSpaceLagsTextField, SFITextField, forecastingTimeTextField; 
+	public JTextField getForecastingTimeTextField() {
+		return forecastingTimeTextField;
+	}
+
+
+	public void setForecastingTimeTextField(JTextField forecastingTimeTextField) {
+		this.forecastingTimeTextField = forecastingTimeTextField;
+	}
+
+	private JCheckBox standardDeviationRatioCheckBox, ctmCheckBox, SFICheckBox, lleCheckBox, d2CheckBox, recurrenceCheckBox, recLamCheckBox, recRateCheckBox, recNeighborsNumCheckBox,recLMeanCheckBox, recDetCheckBox, recShannonCheckBox, forecastingCheckBox;   
 	
 	public PhaseSpaceFeaturesDialog (ExtractUnivariateFeaturesController univariateFeaturesController){
 		EEGFrameMain.checkOnEventDispatchThread();	
 		this.univariateFeaturesController = univariateFeaturesController;
 		this.setTitle ("Phase space features");
 		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-		this.setPreferredSize(new Dimension(450,550));	
+		this.setPreferredSize(new Dimension(450,600));	
 		this.setLayout(new BorderLayout());
 		JPanel panel = addPhaseSpaceFeaturesPanel();
 		this.add(panel, BorderLayout.CENTER);
@@ -213,7 +220,7 @@ public class PhaseSpaceFeaturesDialog extends JDialog {
 				}
 			}
 		});
-		recurrencePanel.add(Box.createHorizontalGlue());
+//		recurrencePanel.add(Box.createHorizontalGlue());
 		recurrencePanel.add(Box.createRigidArea(new Dimension(5,0)));
 		recurrencePanel.add(recurrenceLabel);
 		recurrencePanel.add(Box.createHorizontalGlue());
@@ -315,6 +322,51 @@ public class PhaseSpaceFeaturesDialog extends JDialog {
 		panel.add(recShannonPanel);
 		panel.add(Box.createRigidArea(new Dimension(5,10)));
 		
+		JPanel forecastingPanel = new JPanel();
+		forecastingPanel.setLayout(new BoxLayout(forecastingPanel, BoxLayout.X_AXIS));
+		JLabel forecastingLabel = new JLabel("Nonlinear forecasting");
+//		forecastingLabel.setHorizontalAlignment(JLabel.LEFT);
+		forecastingLabel.setPreferredSize(new Dimension(400, 20));
+		forecastingCheckBox = new JCheckBox();
+//		forecastingPanel.add(Box.createHorizontalGlue());
+		forecastingPanel.add(Box.createRigidArea(new Dimension(5,0)));
+		forecastingPanel.add(forecastingLabel);
+		forecastingPanel.add(Box.createHorizontalGlue());
+		forecastingPanel.add(forecastingCheckBox);
+		forecastingCheckBox.addItemListener(new ItemListener(){
+            
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				// TODO Auto-generated method stub
+				if(e.getStateChange() == ItemEvent.SELECTED){
+					forecastingTimeTextField.setEnabled(true);
+                }
+				else{
+					forecastingTimeTextField.setEnabled(false);
+				}
+			}
+		});
+		forecastingPanel.add(Box.createHorizontalGlue());
+		panel.add(forecastingPanel);
+		panel.add(Box.createRigidArea(new Dimension(5,10)));
+		
+		JPanel nonlinearTimePanel = new JPanel();
+		nonlinearTimePanel.setLayout(new BoxLayout(nonlinearTimePanel, BoxLayout.X_AXIS));
+		JLabel nonlinearTimeLabel = new JLabel("T in samples, comma separated: ");
+		nonlinearTimeLabel.setPreferredSize(new Dimension(300, 20));		
+		nonlinearTimePanel.add(Box.createRigidArea(new Dimension(30,0)));
+		nonlinearTimePanel.add(nonlinearTimeLabel);
+		nonlinearTimePanel.add(Box.createHorizontalGlue());
+		forecastingTimeTextField = new JTextField("1");
+		forecastingTimeTextField.setEnabled(false);
+		forecastingTimeTextField.setPreferredSize(new Dimension(100,20));
+		forecastingTimeTextField.setMaximumSize(new Dimension(100,20));
+		nonlinearTimePanel.add(forecastingTimeTextField);
+		nonlinearTimePanel.add(Box.createHorizontalGlue());
+		panel.add(nonlinearTimePanel);
+		panel.add(Box.createRigidArea(new Dimension(5,10)));
+		
+		
 		panel.add(new JSeparator());
 		panel.add(Box.createRigidArea(new Dimension(5,10)));
 		JPanel buttonPanel = new JPanel();
@@ -339,6 +391,7 @@ public class PhaseSpaceFeaturesDialog extends JDialog {
 				recDetCheckBox.setSelected(true);
 				recShannonCheckBox.setSelected(true); 
 				d2CheckBox.setSelected(true); 
+				forecastingCheckBox.setSelected(true);
 				
 			}
 		});
@@ -360,6 +413,7 @@ public class PhaseSpaceFeaturesDialog extends JDialog {
 				recDetCheckBox.setSelected(false);
 				recShannonCheckBox.setSelected(false); 
 				d2CheckBox.setSelected(false); 
+				forecastingCheckBox.setSelected(false);
 				
 			}
 		});
@@ -407,6 +461,9 @@ public class PhaseSpaceFeaturesDialog extends JDialog {
 				}
 				if(recShannonCheckBox.isSelected()){
 					f.getFeatures().put(UnivariateFeatures.REC_SHANNON, true);
+				}
+				if(forecastingCheckBox.isSelected()){
+					f.getFeatures().put(UnivariateFeatures.NLPE, true);
 				}
 				setVisible(false);
 			}

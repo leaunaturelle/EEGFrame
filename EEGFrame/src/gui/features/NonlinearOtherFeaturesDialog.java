@@ -43,7 +43,7 @@ public class NonlinearOtherFeaturesDialog extends JDialog {
 	public void setCtmTextField(JTextField ctmTextField) {
 		this.ctmTextField = ctmTextField;
 	}
-	private JCheckBox allanFactorCheckBox, lempelZivCheckBox, forecastingCheckBox, ctmCheckBox;
+	private JCheckBox allanFactorCheckBox, lempelZivCheckBox, ctmCheckBox;
 	private ExtractUnivariateFeaturesController univariateController;
 
 	public NonlinearOtherFeaturesDialog(ExtractUnivariateFeaturesController univariateController){
@@ -51,7 +51,7 @@ public class NonlinearOtherFeaturesDialog extends JDialog {
 		this.univariateController = univariateController;		
 		this.setTitle ("Nonlinear other features");
 		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-		this.setPreferredSize(new Dimension(550,250));	
+		this.setPreferredSize(new Dimension(550,200));	
 		this.setLayout(new BorderLayout());
 		JPanel panel = addNonlinearOtherFeaturesPanel();
 		this.add(panel, BorderLayout.CENTER);
@@ -118,20 +118,6 @@ public class NonlinearOtherFeaturesDialog extends JDialog {
 		panel.add(lempelZivPanel);
 		panel.add(Box.createRigidArea(new Dimension(5,10)));
 		
-		JPanel forecastingPanel = new JPanel();
-		forecastingPanel.setLayout(new BoxLayout(forecastingPanel, BoxLayout.X_AXIS));
-		JLabel forecastingLabel = new JLabel("Nonlinear forecasting");
-//		forecastingLabel.setHorizontalAlignment(JLabel.LEFT);
-		forecastingLabel.setPreferredSize(new Dimension(400, 20));
-		forecastingCheckBox = new JCheckBox();
-//		forecastingPanel.add(Box.createHorizontalGlue());
-		forecastingPanel.add(Box.createRigidArea(new Dimension(5,0)));
-		forecastingPanel.add(forecastingLabel);
-		forecastingPanel.add(Box.createHorizontalGlue());
-		forecastingPanel.add(forecastingCheckBox);
-		forecastingPanel.add(Box.createHorizontalGlue());
-		panel.add(forecastingPanel);
-		panel.add(Box.createRigidArea(new Dimension(5,10)));
 		
 		JPanel ctmPanel = new JPanel();
 		ctmPanel.setLayout(new BoxLayout(ctmPanel, BoxLayout.X_AXIS));
@@ -186,7 +172,6 @@ public class NonlinearOtherFeaturesDialog extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				allanFactorCheckBox.setSelected(true);
 				lempelZivCheckBox.setSelected(true);
-				forecastingCheckBox.setSelected(true);
 				ctmCheckBox.setSelected(true);
 			}
 		});
@@ -199,7 +184,6 @@ public class NonlinearOtherFeaturesDialog extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				allanFactorCheckBox.setSelected(false);
 				lempelZivCheckBox.setSelected(false);
-				forecastingCheckBox.setSelected(false);
 				ctmCheckBox.setSelected(false);
 				
 			}
@@ -217,9 +201,6 @@ public class NonlinearOtherFeaturesDialog extends JDialog {
 				}
 				if(lempelZivCheckBox.isSelected()){
 					f.getFeatures().put(UnivariateFeatures.LEMPEL_ZIV, true);
-				}
-				if(forecastingCheckBox.isSelected()){
-					f.getFeatures().put(UnivariateFeatures.NONLINEAR_FORECASTING, true);
 				}
 				if(ctmCheckBox.isSelected()){
 					f.getFeatures().put(UnivariateFeatures.CTM, true);

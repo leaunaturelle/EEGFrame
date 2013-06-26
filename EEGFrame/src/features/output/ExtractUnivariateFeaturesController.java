@@ -26,6 +26,7 @@ import features.nonlinear.fractal.DFA;
 import features.nonlinear.fractal.HiguchiDimension;
 import features.nonlinear.fractal.HurstExponent;
 import features.nonlinear.other.CTMSecondOrderDifferencePlot;
+import features.nonlinear.other.NonlinearPredictionError;
 import features.nonlinear.phaseSpace.CTM;
 import features.nonlinear.phaseSpace.CorrelationDimension;
 import features.nonlinear.phaseSpace.LyapunovExponent;
@@ -305,7 +306,35 @@ public class ExtractUnivariateFeaturesController extends ExtractFeaturesControll
 			double ctm = CTM.calculateCTM(series, r, phaseSpaceDim, phaseSpaceLag);
 			selectedFeatures.getExtractedFeatures()[i].put(UnivariateFeatures.CTM_PHASE_SPACE, Double.toString(ctm));
 		}
-		
+		if(selectedFeatures.getFeatures().get(UnivariateFeatures.NLPE)){
+			int phaseSpaceDim = (int)Double.parseDouble(extractUnivariateFeaturesWindow.getPhaseSpaceFeaturesDialog().getPhaseSpaceDimensionTextField().getText());
+			int phaseSpaceLag = (int)Double.parseDouble(extractUnivariateFeaturesWindow.getPhaseSpaceFeaturesDialog().getPhaseSpaceLagsTextField().getText());
+			
+			String t = extractUnivariateFeaturesWindow.getPhaseSpaceFeaturesDialog().getForecastingTimeTextField().getText();
+			String[] tValues = t.split(",");
+			double nlpe = 0;
+			for(int j = 0; j < tValues.length; j++){
+				int value = (int) Double.parseDouble(tValues[j].trim());
+				try {
+					nlpe = NonlinearPredictionError.calculateNonlinearPredictionError(series, phaseSpaceDim, phaseSpaceLag, value);
+					selectedFeatures.getExtractedFeatures()[i].put(UnivariateFeatures.NLPE +"_"+value, Double.toString(nlpe));
+					if(i == 0){		
+						selectedFeatures.getOptionsToPrint().add(UnivariateFeatures.NLPE+"_"+value);
+						selectedFeatures.getOptionsToPrintNoParams().add(UnivariateFeatures.NLPE+"_"+value);
+						selectedFeatures.getOptionsToPrint().remove(UnivariateFeatures.NLPE);
+						selectedFeatures.getOptionsToPrintNoParams().remove(UnivariateFeatures.NLPE);					
+					}
+				
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+				
+				
+			
+			selectedFeatures.getExtractedFeatures()[i].put(UnivariateFeatures.NLPE, Double.toString(nlpe));
+		}
 
 		if(selectedFeatures.getFeatures().get(UnivariateFeatures.DFA)){
 		//ZASAD SAMO LONG
@@ -457,6 +486,7 @@ public class ExtractUnivariateFeaturesController extends ExtractFeaturesControll
 			double ctm = CTMSecondOrderDifferencePlot.calculateCTM(series, r*Statistics.standardDeviation(series));
 			selectedFeatures.getExtractedFeatures()[i].put(UnivariateFeatures.CTM, Double.toString(ctm));
 		}
+		
 	}
 
 	public ExtractMixedFeaturesController getExtractMixedFeaturesController() {
