@@ -26,6 +26,7 @@ import features.nonlinear.fractal.DFA;
 import features.nonlinear.fractal.HiguchiDimension;
 import features.nonlinear.fractal.HurstExponent;
 import features.nonlinear.other.CTMSecondOrderDifferencePlot;
+import features.nonlinear.other.LempelZivComplexity;
 import features.nonlinear.other.NonlinearPredictionError;
 import features.nonlinear.phaseSpace.CTM;
 import features.nonlinear.phaseSpace.CorrelationDimension;
@@ -486,7 +487,10 @@ public class ExtractUnivariateFeaturesController extends ExtractFeaturesControll
 			double ctm = CTMSecondOrderDifferencePlot.calculateCTM(series, r*Statistics.standardDeviation(series));
 			selectedFeatures.getExtractedFeatures()[i].put(UnivariateFeatures.CTM, Double.toString(ctm));
 		}
-		
+		if(selectedFeatures.getFeatures().get(UnivariateFeatures.LEMPEL_ZIV)){
+			double lempelZiv = LempelZivComplexity.calculateLempelZivComplexity(series);
+			selectedFeatures.getExtractedFeatures()[i].put(UnivariateFeatures.LEMPEL_ZIV, Double.toString(lempelZiv));
+		}
 	}
 
 	public ExtractMixedFeaturesController getExtractMixedFeaturesController() {
