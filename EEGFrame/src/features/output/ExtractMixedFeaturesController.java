@@ -49,7 +49,7 @@ public class ExtractMixedFeaturesController extends ExtractFeaturesController {
 			selectedFeatures.get(j).setSignals(signals);
 			
 			HashMap<String, String>[] extractedFeatures = (HashMap<String, String>[]) new HashMap[length1+length2];
-//			System.out.println("velicina u mixed extractanih je " + extractedFeatures.length);
+			System.out.println("velicina u mixed extractanih je " + extractedFeatures.length);
 			for(int i = 0; i < length1; i++){
 				extractedFeatures[i] = uniFeatures.getExtractedFeatures()[i];
 			}

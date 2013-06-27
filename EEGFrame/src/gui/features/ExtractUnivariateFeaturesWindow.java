@@ -456,6 +456,7 @@ public class ExtractUnivariateFeaturesWindow extends JDialog {
 							
 							}
 							if(wekaCsvDialog.getRemoveUnknownCheckBox().isSelected()){
+								univariateController.removeUnknownOptions();
 								univariateController.getExtractMixedFeaturesController().getExtractMultivariateFeaturesController().removeUnknownOptions();
 							}
 							if(createButton.isSelected()){
@@ -472,9 +473,6 @@ public class ExtractUnivariateFeaturesWindow extends JDialog {
 						else{
 							univariateController.setOutputFileType(univariateController.WEKA_CSV);
 						}
-					}
-					if(wekaCsvDialog.getRemoveUnknownCheckBox().isSelected()){
-						univariateController.removeUnknownOptions();
 					}
 					else{
 						univariateController.setOutputFileType(univariateController.CSV);

@@ -61,6 +61,7 @@ public class MultivariateFeatures extends Features {
 		optionsToPrintNoParams.add(CRP_LMEAN);
 		optionsToPrintNoParams.add(CRP_RATE);
 		optionsToPrintNoParams.add(CRP_SHANNON);
+		optionsToPrint.add(SYNCHRO_LIKELIHOOD);
 	}
 	/* (non-Javadoc)
 	 * @see features.output.Features#getLabel()

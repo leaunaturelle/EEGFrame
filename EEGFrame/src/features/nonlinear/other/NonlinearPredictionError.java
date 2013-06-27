@@ -58,7 +58,12 @@ public class NonlinearPredictionError {
 		double randomError = calculateRandomPredictionError(xMatrix, yMatrix, allPointsMatrix, dimension, T);
 
 		//returns normalized error
-		return error/randomError;
+		if(randomError != 0){
+			return error/randomError;
+		}
+		else{
+			return 0;
+		}
 	}
 	
 	

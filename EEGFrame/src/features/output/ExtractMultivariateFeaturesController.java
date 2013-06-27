@@ -16,6 +16,7 @@ import dataHandling.InputFile;
 
 import features.nonlinear.multiSeries.CrossRecurrence;
 import features.nonlinear.multiSeries.MutualDimension;
+import features.nonlinear.multiSeries.SynchronizationLikelihood;
 import gui.SelectedSignal;
 import gui.features.ExtractMultivariateFeaturesWindow;
 
@@ -205,6 +206,9 @@ public class ExtractMultivariateFeaturesController extends
 				selectedFeatures.getExtractedFeatures()[i].put(MultivariateFeatures.CRP_SHANNON, Double.toString(crpShannon));
 			}
 		}
+//		if(selectedFeatures.getFeatures().get(MultivariateFeatures.SYNCHRO_LIKELIHOOD)){
+//			SynchronizationLikelihood.calculateSynchronizationLikelihood(series, startSample, seriesLength, dimension, lag, recNum, roRef, epsMax)
+//		}
 	}
 	public void removeUnknownOptions(){
 		ArrayList<Features> f = getSelectedFeatures();
