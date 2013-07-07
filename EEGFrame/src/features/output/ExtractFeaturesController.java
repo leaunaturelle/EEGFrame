@@ -111,7 +111,7 @@ public abstract class ExtractFeaturesController {
         waitDialog.setVisible(true);
 	}
 	public String CSV = "CSV";
-	public String WEKA_CSV = "WEKA_CSV";
+	public String DATA_MINING_CSV = "DATA_MINING_CSV";
 	public static String UNIVARIATE_FEATURES = "UnivariateFeatures";
 	public static String MULTIVARIATE_FEATURES = "MultivariateFeatures";
 	public static String MIXED_FEATURES = "MixedFeatures";

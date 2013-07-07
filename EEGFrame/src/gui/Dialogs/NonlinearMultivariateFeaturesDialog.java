@@ -1,7 +1,7 @@
 /**
  * 
  */
-package gui.features;
+package gui.Dialogs;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -323,7 +323,7 @@ public class NonlinearMultivariateFeaturesDialog extends JDialog {
 		signalsLabelList.setVisibleRowCount(5);
 		signalsLabelList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		JScrollPane signalsLabelSrollPane = new JScrollPane(signalsLabelList);	
-		signalsLabelSrollPane.setBorder(BorderFactory.createTitledBorder("Select signals for feature extraction: "));
+		signalsLabelSrollPane.setBorder(BorderFactory.createTitledBorder("Select signals: "));
 		signalsLabelList.setCellRenderer(new DefaultListCellRenderer(){
 			/**
 			 * 

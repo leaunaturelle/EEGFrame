@@ -1,7 +1,7 @@
 /**
  * 
  */
-package gui.features;
+package gui.Dialogs;
 
 import features.output.ExtractUnivariateFeaturesController;
 import features.output.Features;
@@ -51,7 +51,7 @@ public class NonlinearOtherFeaturesDialog extends JDialog {
 		this.univariateController = univariateController;		
 		this.setTitle ("Nonlinear other features");
 		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-		this.setPreferredSize(new Dimension(550,200));	
+		this.setPreferredSize(new Dimension(400,200));	
 		this.setLayout(new BorderLayout());
 		JPanel panel = addNonlinearOtherFeaturesPanel();
 		this.add(panel, BorderLayout.CENTER);

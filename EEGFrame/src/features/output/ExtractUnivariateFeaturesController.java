@@ -27,16 +27,16 @@ import features.nonlinear.fractal.HiguchiDimension;
 import features.nonlinear.fractal.HurstExponent;
 import features.nonlinear.other.CTMSecondOrderDifferencePlot;
 import features.nonlinear.other.LempelZivComplexity;
-import features.nonlinear.other.NonlinearPredictionError;
-import features.nonlinear.phaseSpace.CTM;
+import features.nonlinear.phaseSpace.CTMPhaseSpacePoints;
 import features.nonlinear.phaseSpace.CorrelationDimension;
 import features.nonlinear.phaseSpace.LyapunovExponent;
+import features.nonlinear.phaseSpace.NonlinearPredictionError;
 import features.nonlinear.phaseSpace.RecurrencePlot;
 import features.nonlinear.phaseSpace.SpatialFillingIndex;
 import features.nonlinear.phaseSpace.StandardDeviationRatio;
 import features.timeFrequency.HaarWaveletStandardDeviation;
 import gui.SelectedSignal;
-import gui.features.ExtractUnivariateFeaturesWindow;
+import gui.Dialogs.ExtractUnivariateFeaturesWindow;
 
 /**
  * @author lsuc
@@ -304,7 +304,7 @@ public class ExtractUnivariateFeaturesController extends ExtractFeaturesControll
 			double mind = Statistics.getDifferenceMinimumNthOrder(series, phaseSpaceLag, 0, series.length, false, Statistics.DESCENDING);
 			double maxd = Statistics.getDifferenceMaximumNthOrder(series, phaseSpaceLag, 0, series.length, false, Statistics.DESCENDING);
 			double r = (maxd-mind)/8;
-			double ctm = CTM.calculateCTM(series, r, phaseSpaceDim, phaseSpaceLag);
+			double ctm = CTMPhaseSpacePoints.calculateCTM(series, r, phaseSpaceDim, phaseSpaceLag);
 			selectedFeatures.getExtractedFeatures()[i].put(UnivariateFeatures.CTM_PHASE_SPACE, Double.toString(ctm));
 		}
 		if(selectedFeatures.getFeatures().get(UnivariateFeatures.NLPE)){

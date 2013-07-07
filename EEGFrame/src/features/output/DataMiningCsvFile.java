@@ -9,13 +9,15 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 /**
  * @author lsuc
  *
  */
-public class WekaCsvFile extends OutputFile {
+public class DataMiningCsvFile extends OutputFile {
 
-	public WekaCsvFile(String filePath){
+	public DataMiningCsvFile(String filePath){
 		this.filePath = filePath;
 	}
 	/* (non-Javadoc)
@@ -116,18 +118,18 @@ public class WekaCsvFile extends OutputFile {
 						extractedFeaturesBuilder.append(features.get(0).classLabel);
 					}
 				}
-//				
+				
 				out.write(extractedFeaturesBuilder.toString());				
 				out.newLine();
 			}
 			out.flush();
-
-	
+			System.out.println("all done!");
 			
 			
 		} finally {
 			if (out != null) {
 				out.close();
+				JOptionPane.showMessageDialog(null, "Features extracted!");
 			}
 		}	
 	

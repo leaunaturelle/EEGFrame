@@ -18,7 +18,7 @@ import features.nonlinear.multiSeries.CrossRecurrence;
 import features.nonlinear.multiSeries.MutualDimension;
 import features.nonlinear.multiSeries.SynchronizationLikelihood;
 import gui.SelectedSignal;
-import gui.features.ExtractMultivariateFeaturesWindow;
+import gui.Dialogs.ExtractMultivariateFeaturesWindow;
 
 /**
  * @author lsuc

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package gui.features;
+package gui.Dialogs;
 
 import features.output.ExtractUnivariateFeaturesController;
 import features.output.Features;
@@ -45,7 +45,7 @@ public class TimeFrequencyFeaturesDialog extends JDialog {
 		this.univariateFeaturesController = univariateFeaturesController;
 		this.setTitle ("Nonlinear time-frequency features");
 		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-		this.setPreferredSize(new Dimension(400,250));	
+		this.setPreferredSize(new Dimension(300,150));	
 		this.setLayout(new BorderLayout());
 		JPanel panel = addTimeFrequencyFeaturesPanel();
 //		disableCheckBoxes();

@@ -18,8 +18,8 @@ import dataHandling.SignalParameterData;
 import features.output.ExtractMixedFeaturesController;
 import features.output.ExtractMultivariateFeaturesController;
 import features.output.ExtractUnivariateFeaturesController;
-import gui.features.AnalysisMultivariateParametersDialog;
-import gui.features.AnalysisUnivariateParametersDialog;
+import gui.Dialogs.AnalysisMultivariateParametersDialog;
+import gui.Dialogs.AnalysisUnivariateParametersDialog;
 
 /**
  * @author lsuc

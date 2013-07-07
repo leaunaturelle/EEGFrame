@@ -34,7 +34,7 @@ public class ExtractFeaturesWorker extends SwingWorker<Boolean, Void> {
 			extractionOutputFile = new CSVFile(fileName);
 		}
 		else{
-			extractionOutputFile = new WekaCsvFile(fileName);
+			extractionOutputFile = new DataMiningCsvFile(fileName);
 		}
 		
 		try {

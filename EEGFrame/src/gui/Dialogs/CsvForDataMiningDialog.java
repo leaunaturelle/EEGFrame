@@ -1,7 +1,7 @@
 /**
  * 
  */
-package gui.features;
+package gui.Dialogs;
 
 import features.output.ExtractUnivariateFeaturesController;
 import features.output.Features;
@@ -31,7 +31,7 @@ import javax.swing.SpinnerNumberModel;
  * @author lsuc
  *
  */
-public class WekaCsvDialog extends JDialog {
+public class CsvForDataMiningDialog extends JDialog {
 
 	/**
 	 * 
@@ -39,35 +39,35 @@ public class WekaCsvDialog extends JDialog {
 	private static final long serialVersionUID = -3675121460405855036L;
 
 	private ExtractUnivariateFeaturesController univariateFeaturesController;
-	private JCheckBox wekaCheckBox, movingWindowCheckBox, removeUnknownCheckBox, multivariateCheckBox, classCheckBox;
+	private JCheckBox dataMiningCheckBox, movingWindowCheckBox, removeUnknownCheckBox, multivariateCheckBox, classCheckBox;
 	private JButton selectMultivariateButton;
 	private JTextField movingWindowSizeTextField, classTextField;
 	private JSpinner percentageSpinner;
 	
-	public WekaCsvDialog(ExtractUnivariateFeaturesController univariateFeaturesController){
+	public CsvForDataMiningDialog(ExtractUnivariateFeaturesController univariateFeaturesController){
 		EEGFrameMain.checkOnEventDispatchThread();
 		this.univariateFeaturesController = univariateFeaturesController;
-		this.setTitle ("Csv file for Weka analysis");
+		this.setTitle ("Csv file for data mining");
 		
 //		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		this.setPreferredSize(new Dimension(450,400));	
 		this.setLayout(new BorderLayout());
-		JPanel panel = addWekaCsvPanel();
+		JPanel panel = adddataMiningCsvPanel();
 		this.add(panel, BorderLayout.CENTER);
 	    this.setResizable(false);
 	    this.setModal(true);
 	    this.pack();
 	}
-	private JPanel addWekaCsvPanel(){
+	private JPanel adddataMiningCsvPanel(){
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		panel.add(Box.createRigidArea(new Dimension(5,10)));
 		
-		JPanel wekaPanel = new JPanel();
-		wekaPanel.setLayout(new BoxLayout(wekaPanel, BoxLayout.X_AXIS));
-		wekaPanel.add(Box.createRigidArea(new Dimension(5,0)));
-		wekaCheckBox = new JCheckBox("Generate Csv file for analysis in Weka");
-		wekaCheckBox.addItemListener(new ItemListener() {			
+		JPanel dataMiningPanel = new JPanel();
+		dataMiningPanel.setLayout(new BoxLayout(dataMiningPanel, BoxLayout.X_AXIS));
+		dataMiningPanel.add(Box.createRigidArea(new Dimension(5,0)));
+		dataMiningCheckBox = new JCheckBox("Generate .csv file for data mining");
+		dataMiningCheckBox.addItemListener(new ItemListener() {			
 			public void itemStateChanged(ItemEvent e) {
 				if(e.getStateChange() == ItemEvent.SELECTED){
 					removeUnknownCheckBox.setEnabled(true);
@@ -83,9 +83,9 @@ public class WekaCsvDialog extends JDialog {
 				}
 			}
 		});		
-		wekaPanel.add(wekaCheckBox);
-		wekaPanel.add(Box.createHorizontalGlue());
-		panel.add(wekaPanel);
+		dataMiningPanel.add(dataMiningCheckBox);
+		dataMiningPanel.add(Box.createHorizontalGlue());
+		panel.add(dataMiningPanel);
 		panel.add(Box.createRigidArea(new Dimension(5,5)));
 		
 
@@ -249,7 +249,7 @@ public class WekaCsvDialog extends JDialog {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				wekaCheckBox.setSelected(true);
+				dataMiningCheckBox.setSelected(true);
 				movingWindowCheckBox.setSelected(true);
 				removeUnknownCheckBox.setSelected(true);
 				multivariateCheckBox.setSelected(true);
@@ -263,7 +263,7 @@ public class WekaCsvDialog extends JDialog {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				wekaCheckBox.setSelected(false);
+				dataMiningCheckBox.setSelected(false);
 				movingWindowCheckBox.setSelected(false);
 				removeUnknownCheckBox.setSelected(false);
 				multivariateCheckBox.setSelected(false);
@@ -305,11 +305,11 @@ public class WekaCsvDialog extends JDialog {
 	public void setRemoveUnknownCheckBox(JCheckBox removeUnknownCheckBox) {
 		this.removeUnknownCheckBox = removeUnknownCheckBox;
 	}
-	public JCheckBox getWekaCheckBox() {
-		return wekaCheckBox;
+	public JCheckBox getdataMiningCheckBox() {
+		return dataMiningCheckBox;
 	}
-	public void setWekaCheckBox(JCheckBox wekaCheckBox) {
-		this.wekaCheckBox = wekaCheckBox;
+	public void setdataMiningCheckBox(JCheckBox dataMiningCheckBox) {
+		this.dataMiningCheckBox = dataMiningCheckBox;
 	}
 	public JCheckBox getMovingWindowCheckBox() {
 		return movingWindowCheckBox;

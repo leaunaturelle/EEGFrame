@@ -1,7 +1,7 @@
 /**
  * 
  */
-package gui.features;
+package gui.Dialogs;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

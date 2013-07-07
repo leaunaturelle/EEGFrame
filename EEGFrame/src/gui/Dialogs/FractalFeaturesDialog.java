@@ -1,7 +1,7 @@
 /**
  * 
  */
-package gui.features;
+package gui.Dialogs;
 
 import features.output.ExtractUnivariateFeaturesController;
 import features.output.Features;

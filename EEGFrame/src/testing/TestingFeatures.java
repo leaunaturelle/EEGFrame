@@ -14,7 +14,7 @@ import features.nonlinear.fractal.HurstExponent;
 import features.nonlinear.multiSeries.MutualDimension;
 import features.nonlinear.multiSeries.SynchronizationLikelihood;
 import features.nonlinear.other.LempelZivComplexity;
-import features.nonlinear.phaseSpace.CTM;
+import features.nonlinear.phaseSpace.CTMPhaseSpacePoints;
 import features.nonlinear.phaseSpace.CorrelationDimension;
 import features.nonlinear.phaseSpace.LyapunovExponent;
 import features.nonlinear.phaseSpace.RecurrencePlot;
@@ -347,7 +347,7 @@ public class TestingFeatures {
 		double ctmindices[] = new double[lags.length];
 		for (k=0; k<lags.length; k++){
 			lags[k]= k+1;
-			if (series2.length-dimension*lags[k]<CTM.MINIMAL_LENGTH_FOR_EXTRACTION){
+			if (series2.length-dimension*lags[k]<CTMPhaseSpacePoints.MINIMAL_LENGTH_FOR_EXTRACTION){
 				ctmindices[k] = 0.0;
 				System.err.print("CTM estimation impossible in this segment.\n");
 				continue;
@@ -355,7 +355,7 @@ public class TestingFeatures {
 			mind = Statistics.getDifferenceMinimumNthOrder(series2, lags[k], 0, series2.length, false, Statistics.DESCENDING);
 			maxd = Statistics.getDifferenceMaximumNthOrder(series2, lags[k], 0, series2.length, false, Statistics.DESCENDING);
 			r = (maxd-mind)/8;
-			ctmindices[k] = CTM.calculateCTM(series2, r, dimension, lags[k]);
+			ctmindices[k] = CTMPhaseSpacePoints.calculateCTM(series2, r, dimension, lags[k]);
 		}
 		for(int i=0; i<ctmindices.length; i++){
 			System.out.println("CTM index "+i+ ": "+ ctmindices[i]);
